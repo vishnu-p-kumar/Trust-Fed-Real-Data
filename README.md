@@ -577,4 +577,6 @@ The API health check is available at `http://127.0.0.1:8000/health`. The default
 
 `models/sgcc_live_theft_model.pkl` and `models/sgcc_live_theft_metadata.json` are the default live theft-detection artifacts, trained from SGCC only. `models/ceew_consumption_forecaster.pkl` and its metadata are the default CEEW forecasting artifacts. The older `random_forest.pkl`, `xgboost_model.pkl`, `isolation_forest.pkl`, `transformer_forecaster.pt` and their metadata are retained only for the explicitly selected legacy synthetic demo path; their metadata now marks `legacy_synthetic_demo_only`, and the default live runtime does not load them. Generated synthetic CSVs and local SQLite state are intentionally not pre-populated in the release; the optional demo command creates its own data, and the runtime creates databases as needed.
 #   T r u s t - F e d - R e a l - D a t a  
+ #   T r u s t - F e d - R e a l - D a t a  
+ #   T r u s t - F e d - R e a l - D a t a  
  

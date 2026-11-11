@@ -1,0 +1,18 @@
+[
+  {
+    "meter_id": "M0512",
+    "region": "Bengaluru",
+    "area": "Electronic City",
+    "latitude": 12.8452,
+    "longitude": 77.6602,
+    "status": "Electricity Theft",
+    "theft_probability": 0.91,
+    "anomaly_score": 0.84,
+    "reason": [
+      "Sudden consumption shift",
+      "High night-time usage",
+      "Voltage irregularity"
+    ]
+  }
+]
+

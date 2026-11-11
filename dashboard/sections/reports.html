@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reports & Insights</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Source+Serif+4:wght@600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    />
+    <link rel="stylesheet" href="../style.css" />
+  </head>
+  <body data-theme="dark">
+    <section class="dashboard-section">
+      <header class="section-header">
+        <div>
+          <p class="eyebrow mb-0">Reporting Layer</p>
+          <h2>Reports & Insights</h2>
+          <p>Operational summaries, downloadable artifacts, and model-backed insights for daily analysis.</p>
+        </div>
+        <div class="section-header-actions">
+          <a class="report-link" id="reportDailyPdfLink" href="#" target="_blank" rel="noreferrer">
+            <i class="bi bi-file-earmark-pdf"></i>
+            Daily PDF Report
+          </a>
+        </div>
+      </header>
+
+      <div class="kpi-grid">
+        <article class="kpi-card glass-card">
+          <span class="kpi-label">Theft Incidents</span>
+          <strong class="kpi-value" id="reportTheftCount">0</strong>
+          <div class="kpi-meta">Current tick theft incidents</div>
+        </article>
+        <article class="kpi-card glass-card">
+          <span class="kpi-label">Efficiency Watch</span>
+          <strong class="kpi-value" id="reportEfficiencyWatch">0</strong>
+          <div class="kpi-meta">Low-efficiency meters in the current window</div>
+        </article>
+        <article class="kpi-card glass-card">
+          <span class="kpi-label">Drift Watch</span>
+          <strong class="kpi-value" id="reportDriftStatus">Stable</strong>
+          <div class="kpi-meta">Current data drift monitoring state</div>
+        </article>
+        <article class="kpi-card glass-card">
+          <span class="kpi-label">Next Day Demand</span>
+          <strong class="kpi-value" id="reportForecastDay">0.00 kWh</strong>
+          <div class="kpi-meta">Ensemble forecast for the next day</div>
+        </article>
+      </div>
+
+      <div class="section-grid two-up">
+        <article class="chart-card glass-card">
+          <h3>Region Consumption Trends</h3>
+          <p>Current area contribution to overall grid demand.</p>
+          <div class="chart-host"><canvas id="reportRegionChart"></canvas></div>
+        </article>
+        <article class="chart-card glass-card">
+          <h3>Forecast Horizon Snapshot</h3>
+          <p>Next hour, day, and week ensemble forecast totals.</p>
+          <div class="chart-host"><canvas id="reportForecastChart"></canvas></div>
+        </article>
+      </div>
+
+      <div class="section-grid two-up mt-3">
+        <article class="list-card glass-card">
+          <h3>Operational Insights</h3>
+          <p>Compact narrative generated from the current system state.</p>
+          <div class="insight-list" id="reportInsights"></div>
+        </article>
+        <article class="list-card glass-card">
+          <h3>Downloadable Artifacts</h3>
+          <p>Generated outputs available to operators and reviewers.</p>
+          <div class="report-links">
+            <a class="report-link" id="reportDailyEnergyLink" href="#" target="_blank" rel="noreferrer">
+              <i class="bi bi-file-earmark-pdf"></i>
+              Daily Energy Report
+            </a>
+            <a class="report-link" id="reportDriftJsonLink" href="#" target="_blank" rel="noreferrer">
+              <i class="bi bi-filetype-json"></i>
+              Drift Report JSON
+            </a>
+            <a class="report-link" id="reportHeatmapLink" href="#" target="_blank" rel="noreferrer">
+              <i class="bi bi-geo-alt"></i>
+              Bengaluru Heatmap
+            </a>
+            <a class="report-link" id="reportSampleApiLink" href="#" target="_blank" rel="noreferrer">
+              <i class="bi bi-braces"></i>
+              Sample API Output
+            </a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+    <script src="../components/core.js"></script>
+    <script src="../components/charts.js"></script>
+    <script>
+      (function () {
+        function setArtifactLink(id, path) {
+          const element = document.getElementById(id);
+          if (element) {
+            element.href = `${SmartGridDashboard.getApiBase()}${path}`;
+          }
+        }
+
+        function updateArtifactLinks() {
+          setArtifactLink("reportDailyPdfLink", "/artifacts/daily-report");
+          setArtifactLink("reportDailyEnergyLink", "/artifacts/daily-report");
+          setArtifactLink("reportDriftJsonLink", "/artifacts/drift-report");
+          setArtifactLink("reportHeatmapLink", "/artifacts/heatmap");
+          setArtifactLink("reportSampleApiLink", "/artifacts/sample-overview");
+        }
+
+        function metric(id, value) {
+          const element = document.getElementById(id);
+          if (element) {
+            element.textContent = value;
+          }
+        }
+
+        function renderInsights(overview, forecast, drift, theft, efficiency) {
+          const topRegion = (overview.region_consumption || [])[0];
+          const insights = [
+            {
+              label: "Top-demand area",
+              value: topRegion ? `${topRegion.area} | ${SmartGridDashboard.formatKwh(topRegion.consumption_kwh || 0, 2)}` : "No area data",
+            },
+            {
+              label: "Forecast posture",
+              value: `${SmartGridDashboard.formatKwh(forecast.ensemble?.next_hour || forecast.next_hour || 0, 2)} next hour | ${SmartGridDashboard.formatKwh(
+                forecast.ensemble?.next_day || forecast.next_day || 0,
+                2
+              )} next day`,
+            },
+            {
+              label: "Efficiency watch",
+              value: `${efficiency.summary?.low_efficiency || 0} low-efficiency meters | ${SmartGridDashboard.formatDecimal(
+                efficiency.summary?.estimated_losses_kwh || 0,
+                2
+              )} kWh losses`,
+            },
+            {
+              label: "Drift monitoring",
+              value: drift.drift_detected ? "Feature or concept drift detected" : "Distributions remain stable",
+            },
+            {
+              label: "Active incidents",
+              value: `${(theft.records || []).length} theft alerts in the current window`,
+            },
+          ];
+
+          SmartGridDashboard.renderList(
+            "reportInsights",
+            insights,
+            (item) => `
+              <div class="insight-row">
+                <span>${item.label}</span>
+                <strong>${item.value}</strong>
+              </div>
+            `,
+            "No report insights available."
+          );
+        }
+
+        function render(overview, forecast, drift, theft, efficiency) {
+          metric("reportTheftCount", SmartGridDashboard.formatNumber((theft.records || []).length));
+          metric("reportEfficiencyWatch", SmartGridDashboard.formatNumber(efficiency.summary?.low_efficiency || 0));
+          metric("reportDriftStatus", drift.drift_detected ? "Detected" : "Stable");
+          metric("reportForecastDay", SmartGridDashboard.formatKwh(forecast.ensemble?.next_day || forecast.next_day || 0, 2));
+
+          SmartGridCharts.renderChart(
+            "reportRegionChart",
+            "bar",
+            (overview.region_consumption || []).map((row) => row.area),
+            [
+              {
+                label: "Consumption (kWh)",
+                data: (overview.region_consumption || []).map((row) => Number(row.consumption_kwh || 0)),
+                backgroundColor: "rgba(20, 184, 166, 0.72)",
+                borderRadius: 12,
+              },
+            ]
+          );
+
+          SmartGridCharts.renderChart(
+            "reportForecastChart",
+            "bar",
+            ["Next hour", "Next day", "Next week"],
+            [
+              {
+                label: "Ensemble forecast",
+                data: [
+                  Number(forecast.ensemble?.next_hour || forecast.next_hour || 0),
+                  Number(forecast.ensemble?.next_day || forecast.next_day || 0),
+                  Number(forecast.ensemble?.next_week || forecast.next_week || 0),
+                ],
+                backgroundColor: ["rgba(56, 189, 248, 0.72)", "rgba(20, 184, 166, 0.72)", "rgba(249, 115, 22, 0.72)"],
+                borderRadius: 12,
+              },
+            ]
+          );
+
+          renderInsights(overview, forecast, drift, theft, efficiency);
+        }
+
+        async function refresh() {
+          updateArtifactLinks();
+          const [overview, forecast, drift, theft, efficiency] = await Promise.all([
+            SmartGridDashboard.fetchJson("/overview"),
+            SmartGridDashboard.fetchJson("/forecast"),
+            SmartGridDashboard.fetchJson("/drift-report"),
+            SmartGridDashboard.fetchJson("/theft?limit=20"),
+            SmartGridDashboard.fetchJson("/efficiency?limit=20"),
+          ]);
+          render(overview, forecast, drift, theft, efficiency);
+        }
+
+        SmartGridDashboard.setupSection({
+          name: "reports",
+          refresh,
+          interval: 3000,
+          socket(payload) {
+            if (payload && payload.overview && payload.forecast && payload.drift && payload.theft && payload.efficiency) {
+              render(payload.overview, payload.forecast, payload.drift, payload.theft, payload.efficiency);
+            }
+          },
+        });
+      })();
+    </script>
+  </body>
+</html>

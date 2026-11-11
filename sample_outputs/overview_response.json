@@ -1,0 +1,52 @@
+{
+  "timestamp": "2026-03-12T18:00:00",
+  "summary": {
+    "total_meters": 500,
+    "active_meters": 425,
+    "anomalies": 5,
+    "theft": 2,
+    "wastage": 4
+  },
+  "live_consumption": [
+    {
+      "timestamp": "2026-03-12T18:00:00",
+      "total_consumption": 118.42,
+      "anomalies": 5,
+      "theft": 2
+    }
+  ],
+  "region_consumption": [
+    {
+      "area": "Electronic City",
+      "consumption_kwh": 13.44
+    },
+    {
+      "area": "Whitefield",
+      "consumption_kwh": 11.87
+    },
+    {
+      "area": "Bellandur",
+      "consumption_kwh": 10.55
+    }
+  ],
+  "forecast": {
+    "next_hour": 123.6,
+    "next_day": 2811.4,
+    "next_week": 19634.5,
+    "series": [
+      {
+        "step": 1,
+        "forecast_kwh": 123.6
+      },
+      {
+        "step": 2,
+        "forecast_kwh": 121.9
+      },
+      {
+        "step": 3,
+        "forecast_kwh": 119.4
+      }
+    ],
+    "model_type": "baseline"
+  }
+}

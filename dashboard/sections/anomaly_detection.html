@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Anomaly Detection</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Source+Serif+4:wght@600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    />
+    <link rel="stylesheet" href="../style.css" />
+  </head>
+  <body data-theme="dark">
+    <section class="dashboard-section">
+      <header class="section-header">
+        <div>
+          <p class="eyebrow mb-0">Outlier Analytics</p>
+          <h2>Anomaly Detection</h2>
+          <p>Isolation Forest scoring, suspicious usage shifts, and outlier clusters needing operator review.</p>
+        </div>
+        <div class="section-header-actions">
+          <span class="live-pill"><i class="bi bi-activity"></i> Isolation Forest alerts</span>
+        </div>
+      </header>
+
+      <div class="kpi-grid">
+        <article class="kpi-card glass-card">
+          <span class="kpi-label">Anomaly Count</span>
+          <strong class="kpi-value" id="anomalyCount">0</strong>
+          <div class="kpi-meta">Anomalous meters on the current tick</div>
+        </article>
+        <article class="kpi-card glass-card">
+          <span class="kpi-label">Average Score</span>
+          <strong class="kpi-value" id="anomalyAverage">0.000</strong>
+          <div class="kpi-meta">Mean anomaly intensity</div>
+        </article>
+        <article class="kpi-card glass-card">
+          <span class="kpi-label">Highest Score</span>
+          <strong class="kpi-value" id="anomalyHighest">0.000</strong>
+          <div class="kpi-meta">Top outlier severity</div>
+        </article>
+        <article class="kpi-card glass-card">
+          <span class="kpi-label">Impacted Areas</span>
+          <strong class="kpi-value" id="anomalyAreas">0</strong>
+          <div class="kpi-meta">Areas containing anomalous meters</div>
+        </article>
+      </div>
+
+      <div class="section-grid two-up">
+        <article class="chart-card glass-card">
+          <h3>Anomaly Score Distribution</h3>
+          <p>Distribution of the current outlier population.</p>
+          <div class="chart-host"><canvas id="anomalyHistogram"></canvas></div>
+        </article>
+        <article class="chart-card glass-card">
+          <h3>Suspicious Meter Scatter</h3>
+          <p>Anomaly intensity against consumption with risk-sensitive marker sizing.</p>
+          <div class="plot-host" id="anomalyScatter"></div>
+        </article>
+      </div>
+
+      <article class="table-card glass-card mt-3">
+        <h3>Anomaly Investigation Queue</h3>
+        <p>Highest anomaly scores with meter details and current status.</p>
+        <table class="section-table">
+          <thead>
+            <tr>
+              <th>Meter</th>
+              <th>Area</th>
+              <th>Consumption</th>
+              <th>Anomaly Score</th>
+              <th>Risk Score</th>
+              <th>Status</th>
+              <th>Timestamp</th>
+            </tr>
+          </thead>
+          <tbody id="anomalyTableBody"></tbody>
+        </table>
+      </article>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+    <script src="../components/core.js"></script>
+    <script src="../components/charts.js"></script>
+    <script>
+      (function () {
+        function metric(id, value) {
+          const element = document.getElementById(id);
+          if (element) {
+            element.textContent = value;
+          }
+        }
+
+        function renderTable(records) {
+          const body = document.getElementById("anomalyTableBody");
+          if (!records.length) {
+            body.innerHTML = '<tr><td colspan="7"><div class="empty-state">No anomaly records available.</div></td></tr>';
+            return;
+          }
+          body.innerHTML = records
+            .map(
+              (record) => `
+                <tr>
+                  <td>${record.meter_id}</td>
+                  <td>${record.area || "-"}</td>
+                  <td>${SmartGridDashboard.formatKwh(record.consumption_kwh || 0, 2)}</td>
+                  <td>${SmartGridDashboard.formatDecimal(record.anomaly_score || 0, 3)}</td>
+                  <td>${SmartGridDashboard.formatDecimal(record.risk_score || 0, 1)}</td>
+                  <td><span class="status-badge ${SmartGridDashboard.statusBadge(record.status)}">${record.status || "Anomaly"}</span></td>
+                  <td>${String(record.timestamp || "").replace("T", " ").slice(0, 19)}</td>
+                </tr>
+              `
+            )
+            .join("");
+        }
+
+        function render(payload) {
+          const records = (payload.records || []).slice().sort((left, right) => Number(right.anomaly_score || 0) - Number(left.anomaly_score || 0));
+          const summary = payload.summary || {};
+
+          metric("anomalyCount", SmartGridDashboard.formatNumber(summary.count || payload.count || 0));
+          metric("anomalyAverage", SmartGridDashboard.formatDecimal(summary.average_score || 0, 3));
+          metric("anomalyHighest", SmartGridDashboard.formatDecimal(summary.highest_score || 0, 3));
+          metric("anomalyAreas", SmartGridDashboard.formatNumber(summary.impacted_areas || 0));
+
+          SmartGridCharts.renderHistogram(
+            "anomalyHistogram",
+            records.map((row) => Number(row.anomaly_score || 0)),
+            "Anomaly score count",
+            "rgba(249, 115, 22, 0.72)"
+          );
+
+          SmartGridCharts.renderPlotly(
+            "anomalyScatter",
+            [
+              {
+                x: records.map((row) => Number(row.consumption_kwh || 0)),
+                y: records.map((row) => Number(row.anomaly_score || 0)),
+                text: records.map((row) => `${row.meter_id} | ${row.area}`),
+                mode: "markers",
+                type: "scatter",
+                marker: {
+                  size: records.map((row) => 10 + Number(row.risk_score || 0) / 10),
+                  color: records.map((row) => Number(row.risk_score || 0)),
+                  colorscale: "Turbo",
+                  opacity: 0.82,
+                  showscale: true,
+                },
+              },
+            ],
+            {
+              xaxis: { title: "Consumption (kWh)" },
+              yaxis: { title: "Anomaly score" },
+            }
+          );
+
+          renderTable(records.slice(0, 20));
+        }
+
+        async function refresh() {
+          const anomalies = await SmartGridDashboard.fetchJson("/anomalies?limit=80");
+          render(anomalies);
+        }
+
+        SmartGridDashboard.setupSection({
+          name: "anomaly_detection",
+          refresh,
+          interval: 3000,
+        });
+      })();
+    </script>
+  </body>
+</html>

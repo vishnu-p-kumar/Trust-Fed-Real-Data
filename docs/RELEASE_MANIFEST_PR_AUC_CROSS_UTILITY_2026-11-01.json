@@ -1,0 +1,145 @@
+{
+  "release": "Trust-Fed-Grid-X PR-AUC and cross-utility research upgrade",
+  "created_utc": "2026-11-01",
+  "validation": {
+    "pytest": "147 passed in 33.97 seconds on the final audit extraction",
+    "compileall": "passed",
+    "api_health_smoke": "passed from extracted release; GET /health returned status=ok and all expected artifacts present",
+    "main_pipeline": "default 500-meter / 60-day bootstrap, model training, PDF report, samples, heatmap passed",
+    "api_workflows": "health, prediction, admin/client/federated/inspector workflows and adaptive attack modes passed",
+    "functional_audit": "docs/FINAL_FUNCTIONAL_AUDIT_2026-11-01.md",
+    "dashboard_js": "all dashboard JavaScript files passed node --check",
+    "requirements": "all requirement files parsed successfully",
+    "compose_config": "YAML parsed and API credential/CORS environment wiring checked; Docker runtime unavailable"
+  },
+  "artifacts": [
+    {
+      "path": "scripts/optimize_sgcc_pr_auc.py",
+      "bytes": 8615,
+      "sha256": "4a03fc26703daf09df9c70ad35ae8ed0d4906168fbb28edaa0ce1fc1e2eba3c1"
+    },
+    {
+      "path": "scripts/evaluate_ceew_domain_shift.py",
+      "bytes": 5589,
+      "sha256": "862a77a538b0cf01afe99be75cf2f59fae53bf7c4b643854a31c27675fcdf4da"
+    },
+    {
+      "path": "scripts/download_tdd2022.py",
+      "bytes": 1425,
+      "sha256": "23671fdd4032436152eb1f885fd4a35394b70c8b3871a61e2be4fc2451f31ac5"
+    },
+    {
+      "path": "scripts/evaluate_tdd2022_external.py",
+      "bytes": 6676,
+      "sha256": "cbbeb82be10e89e471354f2ef819c1747c0bb8d511301e90e250a70b6d2c9bc2"
+    },
+    {
+      "path": "reports/research_runs/sgcc_pr_auc_optimisation.json",
+      "bytes": 10695,
+      "sha256": "e81fecc9bcdfc50e64b583d62820d4621b27368084246248c822a3b96d703310"
+    },
+    {
+      "path": "reports/research_runs/ceew_cross_utility_shift.json",
+      "bytes": 10955,
+      "sha256": "2bfaa4f8a1297e3ea8d788b27794b32a177ee93e8864fec87d8dd6ed17c13b12"
+    },
+    {
+      "path": "datasets/ceew/raw/SM Cleaned Data MH Aggregated.csv",
+      "bytes": 578103,
+      "sha256": "ae79e4775b477d781d317864b2ff60d113f509a034774784f383d82a7ee034f1"
+    },
+    {
+      "path": "datasets/ceew/raw/SM Cleaned Data BR Aggregated.csv",
+      "bytes": 978437,
+      "sha256": "504495933cadd1987c235d3cf7e66e3a56830f4d7679e62dd6ad9ec32063fe40"
+    },
+    {
+      "path": "docs/PR_AUC_AND_CROSS_UTILITY_UPGRADE_2026-11-01.md",
+      "bytes": 4790,
+      "sha256": "0b9b9a12877942b10d6bdcee4207e267a28040128bbfb2d1f392860872f74008"
+    },
+    {
+      "path": "api/main.py",
+      "bytes": 69392,
+      "sha256": "4148ea3cc234558746014813cc1624b22c1bc8fd02666f5f67a7f1be42cf40bb"
+    },
+    {
+      "path": "src/sample_outputs.py",
+      "bytes": 5083,
+      "sha256": "45f0d1cfdb8d435fc68a7654717251dc93dd65e94bd1747317c1c703de3487fe"
+    },
+    {
+      "path": "tests/test_forecasting_and_exports.py",
+      "bytes": 2396,
+      "sha256": "3c3f28ca40e03233e8d900fbc6a15a84a1c187bb6f696dfface5b089df351b36"
+    },
+    {
+      "path": "tests/test_attack_extensions.py",
+      "bytes": 4228,
+      "sha256": "0fa3d23af8dc359e1b8fa637e16e148e73e47709cb33c34fd7d5a44353ca42de"
+    },
+    {
+      "path": ".env.example",
+      "bytes": 1152,
+      "sha256": "bb871f8953e780ef453e2e0984d9befb934de0d092cc22522e76b98bc9b11721"
+    },
+    {
+      "path": "requirements-advanced.txt",
+      "bytes": 112,
+      "sha256": "b8f49ef366fd4774d24b9c00252f43ff7ed885e0a5d040fedd0ff65735494483"
+    },
+    {
+      "path": "sample_outputs/predict_request.json",
+      "bytes": 483,
+      "sha256": "6f51415e740f4ee6053700d24b77599595ef9cde2198830818791e90e0175e1c"
+    },
+    {
+      "path": "docs/FINAL_FUNCTIONAL_AUDIT_2026-11-01.md",
+      "bytes": 8233,
+      "sha256": "22bc63b2a8324970d92a98bc13b9ca7ce273589981537929ed0053f034bb731a"
+    },
+    {
+      "path": "reports/functional_audit/fl_comparison_smoke.json",
+      "bytes": 288955,
+      "sha256": "3f64ed29ab8da39f82ba8b7f6b4eb974ff4219a314152b0858cd69d9dd505b76"
+    },
+    {
+      "path": "reports/functional_audit/robustness_smoke.json",
+      "bytes": 304116,
+      "sha256": "cdb8f3c304df1f3c7f4cbd5200c25d723cb1bd0da83b3531a979a521a763f942"
+    },
+    {
+      "path": "reports/functional_audit/privacy_utility_smoke.json",
+      "bytes": 86114,
+      "sha256": "ad976c92016379232cfd2677c015df7161d84b06215bc7a9a0543305e597f62e"
+    },
+    {
+      "path": "reports/functional_audit/sgcc_adversarial_smoke.json",
+      "bytes": 103712,
+      "sha256": "354f15b0a48cf8537a5615a83d760035c6dbcba8e9ff3ace3f149f33dfa8d4a2"
+    },
+    {
+      "path": "reports/functional_audit/edge_efficiency_smoke.json",
+      "bytes": 1128,
+      "sha256": "84d5f2586c1c37d92e0f355c523ae68e62d8c5a1bb07e19644e6b2eea50fa6cd"
+    },
+    {
+      "path": "reports/functional_audit/sgcc_explain_smoke.json",
+      "bytes": 3305,
+      "sha256": "4632467fc65b69556ab60d18f7bcefef73c63628c230a97ea6ffe85fd55eeb2b"
+    },
+    {
+      "path": "docker-compose.yml",
+      "bytes": 3446,
+      "sha256": "f80346f5da03d3cd47327c6b908dbb6bba13e607dd31f198c9c993edabd73111"
+    },
+    {
+      "path": "README.md",
+      "bytes": 38304,
+      "sha256": "360d8f827f9e0bac966863f0ab78751bcf05325f8d2bd869e65d13a9870ced18"
+    }
+  ],
+  "limitations": [
+    "The full-cohort PR-AUC artifact is retained; a new full-cohort recomputation exceeded the execution limit in the final functional audit. A deterministic 3,600-customer, three-seed smoke run completed."
+  ]
+}

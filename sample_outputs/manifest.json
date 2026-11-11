@@ -1,0 +1,11 @@
+{
+  "seed": 42,
+  "description": "Tracked reference payloads for demos and documentation. Running the pipeline writes regenerated samples into sample_outputs/generated/.",
+  "files": [
+    "predict_request.json",
+    "predict_response.json",
+    "theft_response.json",
+    "overview_response.json"
+  ]
+}
+

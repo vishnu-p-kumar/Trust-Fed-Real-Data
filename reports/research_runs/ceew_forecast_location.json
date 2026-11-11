@@ -1,0 +1,135 @@
+{
+  "task": "next-interval consumption forecast; not theft detection",
+  "label_status": "no verified theft labels; no theft labels were created or used",
+  "config": {
+    "clients": 2,
+    "rounds": 3,
+    "local_epochs": 5,
+    "learning_rate": 0.1,
+    "seed": 42,
+    "interval": "1 days 00:00:00",
+    "client_partition": "whole locations assigned once (non-IID geographic split)",
+    "split": "per-meter chronological 60/20/20 by forecast target timestamp",
+    "features": [
+      "x_lag1",
+      "x_lag7",
+      "x_weekday_sin",
+      "x_weekday_cos",
+      "x_day_sin",
+      "x_day_cos"
+    ],
+    "preprocessing": "fixed log1p consumption transform and calendar sine/cosine; no fitted feature transforms"
+  },
+  "hyperparameter_selection": {
+    "selected_learning_rate": 0.1,
+    "selection_metric": "FedAvg validation MAE in kWh",
+    "validation_candidates": [
+      {
+        "learning_rate": 0.01,
+        "validation_mae_kwh": 4.04927996251966
+      },
+      {
+        "learning_rate": 0.03,
+        "validation_mae_kwh": 1.9543679239296787
+      },
+      {
+        "learning_rate": 0.05,
+        "validation_mae_kwh": 1.9192680769164272
+      },
+      {
+        "learning_rate": 0.1,
+        "validation_mae_kwh": 1.8748037619513491
+      }
+    ]
+  },
+  "quality": {
+    "invalid_rows_excluded": 0,
+    "duplicate_key_rows_excluded": 0
+  },
+  "counts": {
+    "meters": 84,
+    "examples": 34011,
+    "train": 20373,
+    "test": 6837,
+    "validation": 6801
+  },
+  "client_row_counts": {
+    "client_000": 10916,
+    "client_001": 23095
+  },
+  "metrics": {
+    "validation": {
+      "centralized": {
+        "n": 6801,
+        "mae_kwh": 1.872262602636615,
+        "rmse_kwh": 3.5892110402062514,
+        "wape": 0.20870849252009413
+      },
+      "fedavg": {
+        "n": 6801,
+        "mae_kwh": 1.8748037619513491,
+        "rmse_kwh": 3.593511596580647,
+        "wape": 0.20899176556581145
+      },
+      "trimmed_mean": {
+        "n": 6801,
+        "mae_kwh": 1.8664756648094158,
+        "rmse_kwh": 3.5768599717686804,
+        "wape": 0.20806339974917545
+      },
+      "local_only": {
+        "n": 6801,
+        "mae_kwh": 1.872727862108371,
+        "rmse_kwh": 3.584269327821567,
+        "wape": 0.20876035682740024
+      },
+      "persistence": {
+        "n": 6801,
+        "mae_kwh": 1.672572856932804,
+        "rmse_kwh": 3.122162859373752,
+        "wape": 0.18644828941670907
+      }
+    },
+    "test": {
+      "centralized": {
+        "n": 6837,
+        "mae_kwh": 2.128740376205665,
+        "rmse_kwh": 3.9280723400280992,
+        "wape": 0.23773712280540082
+      },
+      "fedavg": {
+        "n": 6837,
+        "mae_kwh": 2.1310747358172244,
+        "rmse_kwh": 3.9327138557289505,
+        "wape": 0.23799782342622264
+      },
+      "trimmed_mean": {
+        "n": 6837,
+        "mae_kwh": 2.1250507882920964,
+        "rmse_kwh": 3.9158085655531165,
+        "wape": 0.2373250706713248
+      },
+      "local_only": {
+        "n": 6837,
+        "mae_kwh": 2.1476236536738904,
+        "rmse_kwh": 3.958779490880091,
+        "wape": 0.2398460018893001
+      },
+      "persistence": {
+        "n": 6837,
+        "mae_kwh": 1.9787438935205504,
+        "rmse_kwh": 3.8634307343033476,
+        "wape": 0.2209855580664211
+      }
+    }
+  },
+  "forecast_residual_anomaly_proxy": {
+    "definition": "absolute next-interval forecast residual; not a theft label or validated theft detector",
+    "threshold_quantile_selected_on_validation": 0.99,
+    "threshold_kwh": 14.821242240274616,
+    "test_rows_above_threshold": 87,
+    "test_rows": 6837
+  },
+  "communication_bytes_estimate_fedavg": 672,
+  "privacy": "single-process simulation; no DP or secure aggregation"
+}

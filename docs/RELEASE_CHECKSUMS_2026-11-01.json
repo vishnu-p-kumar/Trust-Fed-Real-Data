@@ -1,0 +1,54 @@
+{
+  "datasets/sgcc/raw/sgcc_data.csv": {
+    "bytes": 175194613,
+    "sha256": "99f8fd315626b1f729a9a03a97cb52ed097ab4d43e5771e21554c9e0c369b9b7"
+  },
+  "datasets/sgcc/processed/sgcc_meter_features.csv.gz": {
+    "bytes": 8385471,
+    "sha256": "35c7e86df6ab9490a8f4afc121fa88c3c62657fb2f59329a03255a51d8944ba8"
+  },
+  "datasets/sgcc/processed/feature_manifest.json": {
+    "bytes": 1324,
+    "sha256": "1888a57a5ae2412b3c3a64cf1d3950ce32d0555946e94a47994159fcf5c74296"
+  },
+  "datasets/ceew/processed/ceew_manifest.json": {
+    "bytes": 18817,
+    "sha256": "b5f2bd558d1a774b1e462c1e4fe5b0f957ac53718d5581fca8da5c1759222bbd"
+  },
+  "datasets/ceew/processed/recovery_report.json": {
+    "bytes": 1934,
+    "sha256": "11d7223d36ae7f823139740a3cf130b6fecc8f267aebb8751a04ca4c22028781"
+  },
+  "datasets/ceew/raw/SM Cleaned Data MH2021.csv": {
+    "bytes": 26711040,
+    "sha256": "1a0cdf746fe85b55a135b2a13a48f1cc0d7d5046db534f76ba0c6a80846249ab"
+  },
+  "datasets/ceew/processed/high_frequency/SM Cleaned Data MH2021.normalized.csv.gz": {
+    "bytes": 6108673,
+    "sha256": "44405bf5a8fb8d9f9661ec1bd9d1b5e670059b0e8878f133dda2edfc6b8e704f"
+  },
+  "reports/research_runs/sgcc_customer_disjoint_benchmark.json": {
+    "bytes": 23740,
+    "sha256": "3566a8a09eb4e7e5bce845a12a9facdbccf30a6283129cb63731089f0a0bada3"
+  },
+  "reports/research_runs/sgcc_federated_multiseed.json": {
+    "bytes": 64970,
+    "sha256": "97a4049259be1850ccfd905029f2e00a70544c8dfca8533e5c8a05db35d67c66"
+  },
+  "reports/research_runs/ceew_upload_ingestion.json": {
+    "bytes": 18817,
+    "sha256": "b5f2bd558d1a774b1e462c1e4fe5b0f957ac53718d5581fca8da5c1759222bbd"
+  },
+  "reports/research_runs/ceew_high_frequency_forecast.json": {
+    "bytes": 21575,
+    "sha256": "05a42da6e1bf73dfd5c04fdc8d96942e63aa4491d7df8b822d5098c100d04599"
+  },
+  "reports/research_runs/ceew_daily_forecast.json": {
+    "bytes": 13811,
+    "sha256": "5b5c1d6521a24408c76a37cbf0461c94d7066dda783c2e6eeccdeffedc85be53"
+  },
+  "reports/research_runs/ceew_mh2021_forecast.json": {
+    "bytes": 21049,
+    "sha256": "c1924238797bdf61891bb07eeaaaa2e99c75b5fd759cf8e36d6fc77ef3921cf9"
+  }
+}

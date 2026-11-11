@@ -1,0 +1,182 @@
+# ============================================================
+# Python
+# ============================================================
+
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+pip-wheel-metadata/
+
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.tox/
+.nox/
+.coverage
+.coverage.*
+coverage.xml
+htmlcov/
+
+# ============================================================
+# Virtual Environments
+# ============================================================
+
+.venv/
+venv/
+ENV/
+env/
+
+# ============================================================
+# Environment Variables
+# ============================================================
+
+.env
+.env.*
+!.env.example
+
+# ============================================================
+# Logs
+# ============================================================
+
+*.log
+api.stdout.log
+api.stderr.log
+synthetic_meter_sender.log
+synthetic_meter_sender.err.log
+
+# ============================================================
+# IDEs
+# ============================================================
+
+.vscode/
+.idea/
+
+# ============================================================
+# OS Files
+# ============================================================
+
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ============================================================
+# User / Local Config
+# ============================================================
+
+users.json
+
+# ============================================================
+# Databases
+# ============================================================
+
+*.db
+*.sqlite
+*.sqlite3
+
+database/*
+!database/.gitkeep
+
+# ============================================================
+# Models
+# ============================================================
+
+models/*
+!models/.gitkeep
+
+*.h5
+*.hdf5
+*.pkl
+*.pickle
+*.joblib
+*.onnx
+*.pt
+*.pth
+*.ckpt
+
+# ============================================================
+# Datasets (IMPORTANT)
+# ============================================================
+
+dataset/*
+!dataset/.gitkeep
+
+datasets/*
+!datasets/.gitkeep
+
+# Raw CEEW/SGCC smart-meter source data
+data/raw/*
+data/raw/ceew/
+!data/raw/.gitkeep
+
+# Processed data
+data/processed/*
+!data/processed/.gitkeep
+
+# Labels
+data/labels/*
+!data/labels/README.md
+!data/labels/*.example.json
+
+# ============================================================
+# Research Reports & Outputs
+# ============================================================
+
+reports/*
+!reports/.gitkeep
+
+!reports/research_runs/
+
+reports/research_runs/*
+!reports/research_runs/trust_validation_20261028.json
+
+!reports/research_runs/ceew_profile/
+reports/research_runs/ceew_profile/*
+!reports/research_runs/ceew_profile/ceew_manifest.json
+
+!reports/research_runs/ceew_forecast.json
+!reports/research_runs/ceew_forecast_location.json
+
+sample_outputs/generated/*
+!sample_outputs/generated/.gitkeep
+
+# ============================================================
+# Jupyter
+# ============================================================
+
+.ipynb_checkpoints/
+
+# ============================================================
+# Temporary Files
+# ============================================================
+
+tmp/
+temp/
+*.tmp
+*.bak
+*.cache
+
+# ============================================================
+# Archives
+# ============================================================
+
+*.zip
+*.tar
+*.gz
+*.7z
+*.rar
+
+# ============================================================
+# Large Smart Grid Data Files
+# ============================================================
+
+*.csv
+*.parquet
+*.feather
+
+# Keep example CSVs only
+!*.example.csv

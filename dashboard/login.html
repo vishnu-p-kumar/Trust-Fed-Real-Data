@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Smart Grid Secure Login</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Source+Serif+4:wght@600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body data-theme="dark">
+    <main class="auth-shell">
+      <section class="auth-card glass-panel">
+        <div class="auth-hero">
+          <p class="eyebrow">Secure Access</p>
+          <h1 class="brand-title mb-3">Smart Grid Inspection & Control</h1>
+          <p class="topbar-subtitle mb-4">
+            Access the electricity theft detection platform with role-based dashboards for administrators, field inspectors, and client organizations.
+          </p>
+          <div class="metric-strip">
+            <div class="mini-card">
+              <span class="eyebrow">Roles</span>
+              <strong>Admin + Inspector + Client</strong>
+            </div>
+            <div class="mini-card">
+              <span class="eyebrow">Security</span>
+              <strong>Signed Session Login</strong>
+            </div>
+            <div class="mini-card">
+              <span class="eyebrow">Workflow</span>
+              <strong>Detect, Assign, Complete</strong>
+            </div>
+          </div>
+          <div class="hero-card glass-card">
+            <h3>One sign-in for every role</h3>
+            <p class="mb-0">Admins use email, inspectors use username, and clients can use their client ID, username, or email.</p>
+          </div>
+        </div>
+        <div class="auth-form-shell">
+          <p class="eyebrow">Login</p>
+          <h2 class="topbar-title mb-2">Role-Based Sign In</h2>
+          <p class="topbar-subtitle mb-4">Use the credentials created for your role. Client accounts are created by an administrator.</p>
+          <form id="loginForm">
+            <div class="mb-3">
+              <label class="form-label" for="identifier">Email or Username</label>
+              <input class="form-control form-control-lg" id="identifier" name="identifier" placeholder="Email, username, or client ID" required />
+            </div>
+            <div class="mb-3">
+              <label class="form-label" for="password">Password</label>
+              <input class="form-control form-control-lg" id="password" name="password" type="password" placeholder="Enter password" required />
+            </div>
+            <div class="alert alert-danger auth-error mb-3" id="loginError"></div>
+            <button class="btn btn-info btn-lg w-100" type="submit">Login</button>
+          </form>
+          <p class="small text-secondary mt-3 mb-0">This portal signs in admins, inspectors, and clients.</p>
+        </div>
+      </section>
+    </main>
+    <script src="./login.js?v=2026-04-16-auth-v2"></script>
+  </body>
+</html>

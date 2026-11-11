@@ -1,0 +1,21 @@
+{
+  "meter_id": "M0512",
+  "timestamp": "2026-03-12T18:00:00",
+  "region": "Bengaluru",
+  "area": "Electronic City",
+  "latitude": 12.8452,
+  "longitude": 77.6602,
+  "voltage": 217.4,
+  "current": 9.812,
+  "power": 2.131,
+  "consumption_kwh": 0.623,
+  "power_factor": 0.73,
+  "temperature": 31.6,
+  "humidity": 72.4,
+  "rainfall": 0.0,
+  "wind_speed": 2.8,
+  "weather_condition": "Clear",
+  "expected_consumption_kwh": 1.924,
+  "wastage_score": 0.0,
+  "usage_profile": "commercial"
+}

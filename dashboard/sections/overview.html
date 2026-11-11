@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Overview</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Source+Serif+4:wght@600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    />
+    <link rel="stylesheet" href="../style.css" />
+  </head>
+  <body data-theme="dark">
+    <section class="dashboard-section">
+      <header class="section-header">
+        <div>
+          <p class="eyebrow mb-0">Executive Summary</p>
+          <h2>System Overview</h2>
+          <p>Realtime KPIs, regional demand balance, and immediate operating risks across the Bengaluru grid.</p>
+        </div>
+        <div class="section-header-actions">
+          <span class="live-pill"><i class="bi bi-broadcast-pin"></i> Live refresh every 3 seconds</span>
+        </div>
+      </header>
+
+      <div class="kpi-grid">
+        <article class="kpi-card glass-card">
+          <span class="kpi-label">Total Smart Meters</span>
+          <strong class="kpi-value" id="overviewTotalMeters">0</strong>
+          <div class="kpi-meta">Registered Bengaluru grid assets</div>
+        </article>
+        <article class="kpi-card glass-card">
+          <span class="kpi-label">Active Meters</span>
+          <strong class="kpi-value" id="overviewActiveMeters">0</strong>
+          <div class="kpi-meta">Meters streaming on the latest tick</div>
+        </article>
+        <article class="kpi-card glass-card">
+          <span class="kpi-label">Electricity Theft Alerts</span>
+          <strong class="kpi-value" id="overviewTheftAlerts">0</strong>
+          <div class="kpi-meta">High-priority suspected theft cases</div>
+        </article>
+        <article class="kpi-card glass-card">
+          <span class="kpi-label">Anomalies Detected</span>
+          <strong class="kpi-value" id="overviewAnomalies">0</strong>
+          <div class="kpi-meta">Isolation Forest suspicious readings</div>
+        </article>
+        <article class="kpi-card glass-card">
+          <span class="kpi-label">Power Wastage Alerts</span>
+          <strong class="kpi-value" id="overviewWastageAlerts">0</strong>
+          <div class="kpi-meta">Meters with low operational efficiency</div>
+        </article>
+        <article class="kpi-card glass-card">
+          <span class="kpi-label">Current Electricity Demand</span>
+          <strong class="kpi-value" id="overviewCurrentDemand">0.00 kWh</strong>
+          <div class="kpi-meta">Latest aggregated demand snapshot</div>
+        </article>
+      </div>
+
+      <div class="section-grid two-up">
+        <article class="hero-card glass-card">
+          <h3>Live Demand Pulse</h3>
+          <p>Consumption trend with anomaly and theft overlays from the recent operating window.</p>
+          <div class="plot-host tall" id="overviewDemandPlot"></div>
+        </article>
+        <article class="list-card glass-card">
+          <h3>Operator Insights</h3>
+          <p>Auto-generated signals derived from risk, efficiency, drift watch, and forecast pressure.</p>
+          <div class="insight-list" id="overviewInsights"></div>
+        </article>
+      </div>
+
+      <div class="section-grid two-up mt-3">
+        <article class="chart-card glass-card">
+          <h3>Region-Wise Consumption</h3>
+          <p>Current area contribution to Bengaluru demand.</p>
+          <div class="chart-host"><canvas id="overviewRegionChart"></canvas></div>
+        </article>
+        <article class="chart-card glass-card">
+          <h3>Risk Distribution Panel</h3>
+          <p>Average risk score and concentration of high-severity meters by area.</p>
+          <div class="chart-host"><canvas id="overviewRiskChart"></canvas></div>
+        </article>
+      </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+    <script src="../components/core.js"></script>
+    <script src="../components/charts.js"></script>
+    <script>
+      (function () {
+        function metric(id, value) {
+          const element = document.getElementById(id);
+          if (element) {
+            element.textContent = value;
+          }
+        }
+
+        function renderInsights(overview, risk, efficiency) {
+          const summary = overview.summary || {};
+          const topRegion = (overview.region_consumption || [])[0];
+          const topRisk = (risk.distribution || [])[0];
+          const forecast = overview.forecast || {};
+          const insightRows = [
+            {
+              label: "Peak load area",
+              value: topRegion ? `${topRegion.area} | ${SmartGridDashboard.formatKwh(topRegion.consumption_kwh, 2)}` : "Waiting for live data",
+            },
+            {
+              label: "Top risk concentration",
+              value: topRisk ? `${topRisk.area} | risk ${SmartGridDashboard.formatDecimal(topRisk.avg_risk_score, 1)}` : "No elevated risk areas",
+            },
+            {
+              label: "Forecast next hour",
+              value: SmartGridDashboard.formatKwh((forecast.ensemble || forecast).next_hour || forecast.next_hour || 0, 2),
+            },
+            {
+              label: "Efficiency pressure",
+              value: `${efficiency.summary?.low_efficiency || 0} low-efficiency meters | ${SmartGridDashboard.formatDecimal(efficiency.summary?.estimated_losses_kwh || 0, 2)} kWh estimated losses`,
+            },
+            {
+              label: "Alert dispatch",
+              value: `${(overview.alert_results || []).length} external notifications triggered`,
+            },
+            {
+              label: "Data drift watch",
+              value: overview.drift_detected ? "Incoming data drift detected" : "Distribution stable",
+            },
+            {
+              label: "Anomaly posture",
+              value: `${summary.anomalies || 0} anomalies vs ${summary.theft || 0} theft alerts`,
+            },
+          ];
+
+          SmartGridDashboard.renderList(
+            "overviewInsights",
+            insightRows,
+            (item) => `
+              <div class="insight-row">
+                <span>${item.label}</span>
+                <strong>${item.value}</strong>
+              </div>
+            `,
+            "No insights available."
+          );
+        }
+
+        function render(overview, risk, efficiency) {
+          const summary = overview.summary || {};
+          const live = overview.live_consumption || [];
+          const region = overview.region_consumption || [];
+          const distribution = risk.distribution || overview.risk_distribution || [];
+          const latestLoad = live.length ? Number(live[live.length - 1].total_consumption || 0) : 0;
+
+          metric("overviewTotalMeters", SmartGridDashboard.formatNumber(summary.total_meters || 0));
+          metric("overviewActiveMeters", SmartGridDashboard.formatNumber(summary.active_meters || 0));
+          metric("overviewTheftAlerts", SmartGridDashboard.formatNumber(summary.theft || 0));
+          metric("overviewAnomalies", SmartGridDashboard.formatNumber(summary.anomalies || 0));
+          metric("overviewWastageAlerts", SmartGridDashboard.formatNumber(summary.wastage || 0));
+          metric("overviewCurrentDemand", SmartGridDashboard.formatKwh(latestLoad, 2));
+
+          SmartGridCharts.renderPlotly(
+            "overviewDemandPlot",
+            [
+              {
+                x: live.map((row) => row.timestamp),
+                y: live.map((row) => Number(row.total_consumption || 0)),
+                type: "scatter",
+                mode: "lines+markers",
+                name: "Demand",
+                line: { color: "#14b8a6", width: 3 },
+                fill: "tozeroy",
+                fillcolor: "rgba(20,184,166,0.12)",
+              },
+              {
+                x: live.map((row) => row.timestamp),
+                y: live.map((row) => Number(row.anomalies || 0)),
+                type: "scatter",
+                mode: "lines",
+                name: "Anomalies",
+                line: { color: "#f97316", width: 2, dash: "dot" },
+                yaxis: "y2",
+              },
+              {
+                x: live.map((row) => row.timestamp),
+                y: live.map((row) => Number(row.theft || 0)),
+                type: "scatter",
+                mode: "lines",
+                name: "Theft alerts",
+                line: { color: "#ef4444", width: 2 },
+                yaxis: "y2",
+              },
+            ],
+            {
+              legend: { orientation: "h" },
+              xaxis: { title: "Timestamp" },
+              yaxis: { title: "Demand (kWh)" },
+              yaxis2: { title: "Alert count", overlaying: "y", side: "right" },
+            }
+          );
+
+          SmartGridCharts.renderChart(
+            "overviewRegionChart",
+            "bar",
+            region.map((row) => row.area),
+            [
+              {
+                label: "Consumption (kWh)",
+                data: region.map((row) => Number(row.consumption_kwh || 0)),
+                backgroundColor: "rgba(20, 184, 166, 0.72)",
+                borderRadius: 12,
+              },
+            ]
+          );
+
+          SmartGridCharts.renderChart(
+            "overviewRiskChart",
+            "bar",
+            distribution.slice(0, 10).map((row) => row.area),
+            [
+              {
+                type: "bar",
+                label: "Average risk score",
+                data: distribution.slice(0, 10).map((row) => Number(row.avg_risk_score || 0)),
+                backgroundColor: "rgba(239, 68, 68, 0.68)",
+                borderRadius: 12,
+              },
+              {
+                type: "line",
+                label: "Critical meters",
+                data: distribution.slice(0, 10).map((row) => Number(row.critical_count || 0)),
+                borderColor: "#38bdf8",
+                backgroundColor: "#38bdf8",
+                yAxisID: "y1",
+              },
+            ],
+            {
+              scales: {
+                x: { stacked: false },
+                y: { beginAtZero: true, title: { display: true, text: "Risk score" } },
+                y1: { beginAtZero: true, position: "right", grid: { display: false }, title: { display: true, text: "Critical meters" } },
+              },
+            }
+          );
+
+          renderInsights(overview, risk, efficiency);
+        }
+
+        async function refresh() {
+          const [overview, risk, efficiency] = await Promise.all([
+            SmartGridDashboard.fetchJson("/overview"),
+            SmartGridDashboard.fetchJson("/risk-scores?limit=20"),
+            SmartGridDashboard.fetchJson("/efficiency?limit=20"),
+          ]);
+          render(overview, risk, efficiency);
+        }
+
+        SmartGridDashboard.setupSection({
+          name: "overview",
+          refresh,
+          interval: 3000,
+          socket(payload) {
+            if (payload && payload.overview && payload.risk && payload.efficiency) {
+              render(payload.overview, payload.risk, payload.efficiency);
+            }
+          },
+        });
+      })();
+    </script>
+  </body>
+</html>

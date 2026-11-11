@@ -1,0 +1,14 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Investigation Management</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<style>body{background:#0b1220;color:#e8eef8}.panel{background:#121d30;border:1px solid #26364e;border-radius:14px;padding:18px}.muted{color:#9aabc2}.table{color:#dce6f5}</style></head>
+<body><nav class="navbar navbar-dark border-bottom border-secondary px-4"><a class="navbar-brand" href="../index.html">← Control Center</a><span>Investigation Management</span></nav>
+<main class="container-fluid p-4"><div class="row g-3"><div class="col-lg-4"><section class="panel"><h4>Create investigation</h4>
+<form id="create"><label class="form-label">Meter ID</label><input class="form-control mb-2" name="meter_id" required>
+<label class="form-label">Summary</label><textarea class="form-control mb-2" name="summary" required></textarea>
+<label class="form-label">Priority</label><select class="form-select mb-3" name="priority"><option>low</option><option selected>medium</option><option>high</option><option>critical</option></select>
+<button class="btn btn-info">Create case</button></form><pre id="message" class="small mt-3"></pre></section>
+<section class="panel mt-3"><h5>Operational summary</h5><pre id="summary" class="small muted">Loading…</pre></section></div>
+<div class="col-lg-8"><section class="panel"><div class="d-flex justify-content-between"><h4>Cases</h4><button class="btn btn-outline-light btn-sm" id="refresh">Refresh</button></div>
+<div class="table-responsive"><table class="table table-sm"><thead><tr><th>Meter</th><th>Priority</th><th>Status</th><th>Assignee</th><th>Updated</th><th>Action</th></tr></thead><tbody id="cases"></tbody></table></div></section>
+<section class="panel mt-3"><h5>Case event history</h5><pre id="detail" class="small muted">Select a case to inspect its event history.</pre></section></div></div></main><script src="investigations.js"></script></body></html>

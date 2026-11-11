@@ -1,0 +1,14 @@
+.git
+.github
+__pycache__
+.pytest_cache
+.venv
+venv
+ENV
+.env
+data/raw
+data/processed
+database
+models
+sample_outputs/generated
+

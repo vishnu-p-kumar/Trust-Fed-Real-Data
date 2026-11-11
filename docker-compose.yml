@@ -1,0 +1,103 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: smart-grid-api
+    environment:
+      SMARTGRID_UPDATE_INTERVAL: ${SMARTGRID_UPDATE_INTERVAL:-4}
+      SMARTGRID_FULL_SCALE: ${SMARTGRID_FULL_SCALE:-0}
+      SMARTGRID_DEMO_MODE: ${SMARTGRID_DEMO_MODE:-0}
+      SMARTGRID_ENABLE_ALERTS: ${SMARTGRID_ENABLE_ALERTS:-0}
+      SMARTGRID_ADMIN_EMAIL: ${SMARTGRID_ADMIN_EMAIL:-admin@example.test}
+      SMARTGRID_ADMIN_PASSWORD: ${SMARTGRID_ADMIN_PASSWORD:?Set SMARTGRID_ADMIN_PASSWORD in .env}
+      SMARTGRID_SESSION_SECRET: ${SMARTGRID_SESSION_SECRET:?Set SMARTGRID_SESSION_SECRET in .env}
+      SMARTGRID_COOKIE_SECURE: ${SMARTGRID_COOKIE_SECURE:-0}
+      SMARTGRID_CORS_ORIGINS: ${SMARTGRID_CORS_ORIGINS:-http://127.0.0.1:8000,http://localhost:8000,http://127.0.0.1:8080,http://localhost:8080}
+      OPENWEATHER_API_KEY: ${OPENWEATHER_API_KEY:-}
+      TRUSTFED_DP_ENABLED: ${TRUSTFED_DP_ENABLED:-1}
+      TRUSTFED_DP_CLIP_NORM: ${TRUSTFED_DP_CLIP_NORM:-5.0}
+      TRUSTFED_DP_NOISE_MULTIPLIER: ${TRUSTFED_DP_NOISE_MULTIPLIER:-1.5}
+      TRUSTFED_DP_DELTA: ${TRUSTFED_DP_DELTA:-1e-5}
+      TRUSTFED_DP_MAX_EPSILON: ${TRUSTFED_DP_MAX_EPSILON:-10.0}
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./data:/app/data
+      - ./database:/app/database
+      - ./dataset:/app/dataset
+      - ./maps:/app/maps
+      - ./models:/app/models
+      - ./reports:/app/reports
+      - ./sample_outputs:/app/sample_outputs
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health').read()"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 90s
+    restart: unless-stopped
+
+  dashboard:
+    image: nginx:1.27-alpine
+    container_name: smart-grid-dashboard
+    depends_on:
+      - api
+    ports:
+      - "8080:80"
+    volumes:
+      - ./dashboard:/usr/share/nginx/html
+      - ./maps/theft_heatmap.html:/usr/share/nginx/html/theft_heatmap.html:ro
+      - ./reports:/usr/share/nginx/html/reports:ro
+      - ./sample_outputs:/usr/share/nginx/html/sample_outputs:ro
+    restart: unless-stopped
+
+  postgres:
+    image: postgres:16-alpine
+    container_name: trustfed-postgres
+    profiles: ["production"]
+    environment:
+      POSTGRES_DB: trustfed
+      POSTGRES_USER: trustfed
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U trustfed -d trustfed"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
+  redis:
+    image: redis:7-alpine
+    container_name: trustfed-redis
+    profiles: ["production"]
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
+  postgres-worker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: trustfed-postgres-worker
+    profiles: ["production"]
+    command: ["python", "scripts/postgres_worker.py"]
+    environment:
+      SMARTGRID_POSTGRES_DSN: postgresql://trustfed:${POSTGRES_PASSWORD}@postgres:5432/trustfed
+      WORKER_IDLE_SECONDS: ${WORKER_IDLE_SECONDS:-2}
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+  redis_data:

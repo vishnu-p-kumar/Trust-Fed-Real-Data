@@ -1,0 +1,67 @@
+{
+  "release": "Trust-Fed-Grid-X research upgrade",
+  "release_date": "2026-11-01",
+  "validation": {
+    "pytest": "147 passed in the final functional audit (33.97 seconds; see docs/FINAL_FUNCTIONAL_AUDIT_2026-11-01.md)",
+    "python_compileall": "passed",
+    "sgcc_tuned_customer_benchmark": "5 seeds; customer-disjoint outer test and inner validation",
+    "sgcc_adversarial_suite": "14 runs; 7 scenarios; 2 seeds; 2500 sampled customers",
+    "synthetic_robustness_suite": "24 runs; 12 scenarios; 2 seeds",
+    "privacy_utility_pilot": "12 DP-FedAvg and 12 DP trust-evidence runs; 6 noise multipliers; 2 seeds",
+    "edge_proxy": "2500 sampled customers; local CPU only",
+    "permutation_explanation": "2500 sampled customers; validation-only"
+  },
+  "important_limitations": [
+    "No promise that all metrics improve together.",
+    "SGCC is historical China benchmark data, not Indian utility validation.",
+    "CEEW data has no theft ground-truth labels.",
+    "Trust evidence DP is narrowly scoped and not end-to-end DP.",
+    "Edge metrics are workstation proxies, not physical meter measurements."
+  ],
+  "file_hashes": {
+    "datasets/sgcc/raw/sgcc_data.csv": {
+      "size_bytes": 175194613,
+      "sha256": "99f8fd315626b1f729a9a03a97cb52ed097ab4d43e5771e21554c9e0c369b9b7"
+    },
+    "datasets/sgcc/processed/sgcc_meter_features.csv.gz": {
+      "size_bytes": 8385471,
+      "sha256": "35c7e86df6ab9490a8f4afc121fa88c3c62657fb2f59329a03255a51d8944ba8"
+    },
+    "datasets/sgcc/processed/feature_manifest.json": {
+      "size_bytes": 1324,
+      "sha256": "1888a57a5ae2412b3c3a64cf1d3950ce32d0555946e94a47994159fcf5c74296"
+    },
+    "reports/research_runs/sgcc_tuned_customer_benchmark.json": {
+      "size_bytes": 12316,
+      "sha256": "b9711618ddcc8617f57dde387350fc334a50601456084ed69bef2e50b07395a6"
+    },
+    "reports/research_runs/sgcc_adversarial_suite.json": {
+      "size_bytes": 105811,
+      "sha256": "50e991aa59339de061bd8d2deb58cc552d2be0f94f2e78817dad4fc56ad2d8ef"
+    },
+    "reports/research_runs/robustness_suite.json": {
+      "size_bytes": 311762,
+      "sha256": "e6b798fb60694f78fd4ade8ee7ce63d2b44ce74973bd11457e5a7a4ea9fd2398"
+    },
+    "reports/research_runs/privacy_utility_curve.json": {
+      "size_bytes": 87905,
+      "sha256": "5f934dd8f220c00676de3cc8e874d3f5aafbd576ef6af74f07616c8419e8c772"
+    },
+    "reports/research_runs/edge_efficiency_benchmark.json": {
+      "size_bytes": 1115,
+      "sha256": "e97bad5fe693625c158b91c54306f217312047d58837d5a4ffa4d10bd66f60fd"
+    },
+    "reports/research_runs/sgcc_permutation_explanations.json": {
+      "size_bytes": 3289,
+      "sha256": "aed3f62a5785fd9a2901462f2f776b1cda3eefc1456fd0e5862e79806e323673"
+    },
+    "docs/RESEARCH_UPGRADE_VALIDATION_2026-11-01.md": {
+      "size_bytes": 8000,
+      "sha256": "4762282036172414836d98214ba12aec6f325c38119255559c79b2a3c3ef8499"
+    },
+    "docs/RESEARCH_CONTRIBUTIONS.md": {
+      "size_bytes": 1935,
+      "sha256": "dbe1092b197debc7c5dd06100ed1d5bd962f02fe229e7fb77545d84cc668171f"
+    }
+  }
+}

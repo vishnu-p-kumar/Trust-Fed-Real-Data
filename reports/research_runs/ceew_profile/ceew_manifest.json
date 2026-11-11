@@ -1,0 +1,614 @@
+{
+  "dataset": "CEEW high-frequency smart meter data from Mathura and Bareilly",
+  "dataset_doi": "https://doi.org/10.7910/DVN/GOCHJH",
+  "task_scope": "real consumption/supply observations; no theft ground-truth label column is present",
+  "mode": "auto",
+  "chunk_size": 200000,
+  "max_rows_per_file": null,
+  "normalized_files_written": false,
+  "files": [
+    {
+      "source_file": "CEEW - Smart meter data Bareilly 2020.csv",
+      "source_sha256": "3ed74d940bc394875c7533d4f14668ade9780cb061928ea137cf3a2778396384",
+      "mode": "high_frequency",
+      "location": "Bareilly",
+      "output_file": null,
+      "row_count_processed": 6627360,
+      "is_complete_source": true,
+      "meter_count": 46,
+      "timestamp_start": "2020-01-01T00:00:00",
+      "timestamp_end": "2020-12-31T23:57:00",
+      "observed_positive_intervals_seconds_top20": {
+        "180": 6626421,
+        "86580": 585,
+        "172980": 167,
+        "259380": 75,
+        "345780": 23,
+        "432180": 8,
+        "518580": 7,
+        "604980": 5,
+        "1123380": 3,
+        "864180": 3,
+        "1900980": 2,
+        "2851380": 2,
+        "2073780": 2,
+        "1468980": 2,
+        "3369780": 2,
+        "2764980": 1,
+        "1296180": 1,
+        "1209780": 1,
+        "3196980": 1,
+        "7689780": 1
+      },
+      "nonpositive_timestamp_steps": 0,
+      "out_of_order_timestamp_steps": 0,
+      "valid_timestamp_rows": 6627360,
+      "invalid_meter_rows": 0,
+      "missing_by_field": {
+        "consumption_kwh": 0,
+        "voltage_v": 0,
+        "current_a": 0,
+        "frequency_hz": 0
+      },
+      "invalid_numeric_by_field": {
+        "consumption_kwh": 0,
+        "voltage_v": 0,
+        "current_a": 0,
+        "frequency_hz": 0
+      },
+      "optional_fields_absent_from_source": [],
+      "negative_readings_by_field": {
+        "consumption_kwh": 0,
+        "voltage_v": 0,
+        "current_a": 0,
+        "frequency_hz": 0
+      },
+      "zero_readings_by_field": {
+        "consumption_kwh": 1157808,
+        "voltage_v": 469495,
+        "current_a": 933916,
+        "frequency_hz": 469493
+      },
+      "minimum_by_field": {
+        "consumption_kwh": 0.0,
+        "voltage_v": 0.0,
+        "current_a": 0.0,
+        "frequency_hz": 0.0
+      },
+      "maximum_by_field": {
+        "consumption_kwh": 0.3,
+        "voltage_v": 654.67,
+        "current_a": 57.04,
+        "frequency_hz": 208.33
+      },
+      "zero_consumption_rows": 1157808,
+      "duplicate_key_rows_within_chunks": 0,
+      "duplicate_key_rows_at_chunk_boundaries": 0,
+      "duplicate_detection_note": "duplicates are retained; within-chunk and adjacent-boundary counts only, not a global deduplication scan"
+    },
+    {
+      "source_file": "CEEW - Smart meter data Bareilly 2021.csv",
+      "source_sha256": "0648ba7aadc5abe69d3b4427f6e9e9d45c2721d8566a7a78003916dce2eb4df5",
+      "mode": "high_frequency",
+      "location": "Bareilly",
+      "output_file": null,
+      "row_count_processed": 3948960,
+      "is_complete_source": true,
+      "meter_count": 38,
+      "timestamp_start": "2021-01-01T00:00:00",
+      "timestamp_end": "2021-10-31T23:57:00",
+      "observed_positive_intervals_seconds_top20": {
+        "180": 3948566,
+        "86580": 275,
+        "172980": 47,
+        "259380": 12,
+        "864180": 3,
+        "518580": 3,
+        "345780": 3,
+        "432180": 3,
+        "1641780": 2,
+        "604980": 2,
+        "1382580": 1,
+        "1123380": 1,
+        "6307380": 1,
+        "1296180": 1,
+        "8035380": 1,
+        "1209780": 1
+      },
+      "nonpositive_timestamp_steps": 0,
+      "out_of_order_timestamp_steps": 0,
+      "valid_timestamp_rows": 3948960,
+      "invalid_meter_rows": 0,
+      "missing_by_field": {
+        "consumption_kwh": 0,
+        "voltage_v": 0,
+        "current_a": 0,
+        "frequency_hz": 0
+      },
+      "invalid_numeric_by_field": {
+        "consumption_kwh": 0,
+        "voltage_v": 0,
+        "current_a": 0,
+        "frequency_hz": 0
+      },
+      "optional_fields_absent_from_source": [],
+      "negative_readings_by_field": {
+        "consumption_kwh": 0,
+        "voltage_v": 0,
+        "current_a": 0,
+        "frequency_hz": 0
+      },
+      "zero_readings_by_field": {
+        "consumption_kwh": 602519,
+        "voltage_v": 344294,
+        "current_a": 499929,
+        "frequency_hz": 344295
+      },
+      "minimum_by_field": {
+        "consumption_kwh": 0.0,
+        "voltage_v": 0.0,
+        "current_a": 0.0,
+        "frequency_hz": 0.0
+      },
+      "maximum_by_field": {
+        "consumption_kwh": 0.3,
+        "voltage_v": 654.5,
+        "current_a": 30.59,
+        "frequency_hz": 177.3
+      },
+      "zero_consumption_rows": 602519,
+      "duplicate_key_rows_within_chunks": 0,
+      "duplicate_key_rows_at_chunk_boundaries": 0,
+      "duplicate_detection_note": "duplicates are retained; within-chunk and adjacent-boundary counts only, not a global deduplication scan"
+    },
+    {
+      "source_file": "CEEW - Smart meter data Mathura 2019.csv",
+      "source_sha256": "c09380165e114e7028bbd1a937e08ba7938a2f99e9e41c61e1b606b669afcbe4",
+      "mode": "high_frequency",
+      "location": "Mathura",
+      "output_file": null,
+      "row_count_processed": 3588874,
+      "is_complete_source": true,
+      "meter_count": 38,
+      "timestamp_start": "2019-05-01T00:00:00",
+      "timestamp_end": "2019-12-31T23:57:00",
+      "observed_positive_intervals_seconds_top20": {
+        "180": 3588050,
+        "86580": 319,
+        "172980": 86,
+        "1080": 80,
+        "360": 34,
+        "720": 25,
+        "345780": 19,
+        "259380": 18,
+        "518580": 17,
+        "1980": 15,
+        "86400": 15,
+        "2880": 15,
+        "604980": 9,
+        "777780": 9,
+        "432180": 9,
+        "3780": 9,
+        "4680": 8,
+        "691380": 8,
+        "540": 6,
+        "1036980": 6
+      },
+      "nonpositive_timestamp_steps": 0,
+      "out_of_order_timestamp_steps": 0,
+      "valid_timestamp_rows": 3588874,
+      "invalid_meter_rows": 0,
+      "missing_by_field": {
+        "consumption_kwh": 0,
+        "voltage_v": 0,
+        "current_a": 0,
+        "frequency_hz": 0
+      },
+      "invalid_numeric_by_field": {
+        "consumption_kwh": 0,
+        "voltage_v": 0,
+        "current_a": 0,
+        "frequency_hz": 0
+      },
+      "optional_fields_absent_from_source": [],
+      "negative_readings_by_field": {
+        "consumption_kwh": 0,
+        "voltage_v": 0,
+        "current_a": 0,
+        "frequency_hz": 0
+      },
+      "zero_readings_by_field": {
+        "consumption_kwh": 463924,
+        "voltage_v": 266593,
+        "current_a": 393445,
+        "frequency_hz": 266595
+      },
+      "minimum_by_field": {
+        "consumption_kwh": 0.0,
+        "voltage_v": 0.0,
+        "current_a": 0.0,
+        "frequency_hz": 0.0
+      },
+      "maximum_by_field": {
+        "consumption_kwh": 0.287,
+        "voltage_v": 654.5,
+        "current_a": 44.16,
+        "frequency_hz": 157.82
+      },
+      "zero_consumption_rows": 463924,
+      "duplicate_key_rows_within_chunks": 0,
+      "duplicate_key_rows_at_chunk_boundaries": 0,
+      "duplicate_detection_note": "duplicates are retained; within-chunk and adjacent-boundary counts only, not a global deduplication scan"
+    },
+    {
+      "source_file": "CEEW - Smart meter data Mathura 2020.csv",
+      "source_sha256": "e77ddf845b7d00ff1e206556e5657480507cc25a6d0600d6f129dc0c01470c53",
+      "mode": "high_frequency",
+      "location": "Mathura",
+      "output_file": null,
+      "row_count_processed": 3759360,
+      "is_complete_source": true,
+      "meter_count": 38,
+      "timestamp_start": "2020-01-01T00:00:00",
+      "timestamp_end": "2020-12-31T23:57:00",
+      "observed_positive_intervals_seconds_top20": {
+        "180": 3757811,
+        "86580": 650,
+        "172980": 311,
+        "259380": 168,
+        "345780": 103,
+        "432180": 58,
+        "518580": 44,
+        "604980": 32,
+        "691380": 26,
+        "777780": 18,
+        "864180": 11,
+        "1036980": 9,
+        "950580": 9,
+        "1209780": 8,
+        "1123380": 8,
+        "1468980": 7,
+        "1296180": 6,
+        "1641780": 6,
+        "1728180": 4,
+        "1555380": 4
+      },
+      "nonpositive_timestamp_steps": 0,
+      "out_of_order_timestamp_steps": 0,
+      "valid_timestamp_rows": 3759360,
+      "invalid_meter_rows": 0,
+      "missing_by_field": {
+        "consumption_kwh": 0,
+        "voltage_v": 0,
+        "current_a": 0,
+        "frequency_hz": 0
+      },
+      "invalid_numeric_by_field": {
+        "consumption_kwh": 0,
+        "voltage_v": 0,
+        "current_a": 0,
+        "frequency_hz": 0
+      },
+      "optional_fields_absent_from_source": [],
+      "negative_readings_by_field": {
+        "consumption_kwh": 0,
+        "voltage_v": 0,
+        "current_a": 0,
+        "frequency_hz": 0
+      },
+      "zero_readings_by_field": {
+        "consumption_kwh": 691046,
+        "voltage_v": 418466,
+        "current_a": 556132,
+        "frequency_hz": 418469
+      },
+      "minimum_by_field": {
+        "consumption_kwh": 0.0,
+        "voltage_v": 0.0,
+        "current_a": 0.0,
+        "frequency_hz": 0.0
+      },
+      "maximum_by_field": {
+        "consumption_kwh": 0.299,
+        "voltage_v": 614.78,
+        "current_a": 42.8,
+        "frequency_hz": 570.33
+      },
+      "zero_consumption_rows": 691046,
+      "duplicate_key_rows_within_chunks": 0,
+      "duplicate_key_rows_at_chunk_boundaries": 0,
+      "duplicate_detection_note": "duplicates are retained; within-chunk and adjacent-boundary counts only, not a global deduplication scan"
+    },
+    {
+      "source_file": "SM Cleaned Data BR Aggregated.csv",
+      "source_sha256": "504495933cadd1987c235d3cf7e66e3a56830f4d7679e62dd6ad9ec32063fe40",
+      "mode": "daily_aggregate",
+      "location": "Bareilly",
+      "output_file": null,
+      "row_count_processed": 28119,
+      "is_complete_source": true,
+      "meter_count": 46,
+      "timestamp_start": "2019-05-09T00:00:00",
+      "timestamp_end": "2021-10-31T00:00:00",
+      "observed_positive_intervals_seconds_top20": {
+        "86400": 26344,
+        "172800": 1163,
+        "259200": 320,
+        "345600": 102,
+        "432000": 41,
+        "518400": 18,
+        "604800": 14,
+        "950400": 8,
+        "691200": 8,
+        "1036800": 7,
+        "1468800": 5,
+        "1123200": 5,
+        "864000": 4,
+        "1209600": 4,
+        "1296000": 3,
+        "1555200": 3,
+        "777600": 3,
+        "1987200": 2,
+        "2937600": 2,
+        "2160000": 2
+      },
+      "nonpositive_timestamp_steps": 0,
+      "out_of_order_timestamp_steps": 0,
+      "valid_timestamp_rows": 28119,
+      "invalid_meter_rows": 0,
+      "missing_by_field": {
+        "consumption_kwh": 0
+      },
+      "invalid_numeric_by_field": {
+        "consumption_kwh": 0,
+        "voltage_v": 0,
+        "current_a": 0,
+        "frequency_hz": 0
+      },
+      "optional_fields_absent_from_source": [
+        "voltage_v",
+        "current_a",
+        "frequency_hz"
+      ],
+      "negative_readings_by_field": {
+        "consumption_kwh": 0
+      },
+      "zero_readings_by_field": {
+        "consumption_kwh": 778
+      },
+      "minimum_by_field": {
+        "consumption_kwh": 0.0
+      },
+      "maximum_by_field": {
+        "consumption_kwh": 82.62199999999989
+      },
+      "zero_consumption_rows": 778,
+      "duplicate_key_rows_within_chunks": 0,
+      "duplicate_key_rows_at_chunk_boundaries": 0,
+      "duplicate_detection_note": "duplicates are retained; within-chunk and adjacent-boundary counts only, not a global deduplication scan"
+    },
+    {
+      "source_file": "SM Cleaned Data BR2019.csv",
+      "source_sha256": "01746be1e45b61e175a7097941caf932188d3e71fc3e8ee0a46b027d2c5ac830",
+      "mode": "high_frequency",
+      "location": "Bareilly",
+      "output_file": null,
+      "row_count_processed": 2919315,
+      "is_complete_source": true,
+      "meter_count": 46,
+      "timestamp_start": "2019-05-09T00:00:00",
+      "timestamp_end": "2019-12-31T23:57:00",
+      "observed_positive_intervals_seconds_top20": {
+        "180": 2918806,
+        "86580": 295,
+        "172980": 102,
+        "345780": 14,
+        "259380": 12,
+        "432180": 6,
+        "950580": 5,
+        "777780": 4,
+        "1036980": 4,
+        "518580": 4,
+        "864180": 2,
+        "360": 2,
+        "22860": 1,
+        "145800": 1,
+        "23580": 1,
+        "1084500": 1,
+        "24480": 1,
+        "119160": 1,
+        "15300": 1,
+        "604980": 1
+      },
+      "nonpositive_timestamp_steps": 0,
+      "out_of_order_timestamp_steps": 0,
+      "valid_timestamp_rows": 2919315,
+      "invalid_meter_rows": 0,
+      "missing_by_field": {
+        "consumption_kwh": 0,
+        "voltage_v": 0,
+        "current_a": 0,
+        "frequency_hz": 0
+      },
+      "invalid_numeric_by_field": {
+        "consumption_kwh": 0,
+        "voltage_v": 0,
+        "current_a": 0,
+        "frequency_hz": 0
+      },
+      "optional_fields_absent_from_source": [],
+      "negative_readings_by_field": {
+        "consumption_kwh": 0,
+        "voltage_v": 0,
+        "current_a": 0,
+        "frequency_hz": 0
+      },
+      "zero_readings_by_field": {
+        "consumption_kwh": 475664,
+        "voltage_v": 186495,
+        "current_a": 429855,
+        "frequency_hz": 186498
+      },
+      "minimum_by_field": {
+        "consumption_kwh": 0.0,
+        "voltage_v": 0.0,
+        "current_a": 0.0,
+        "frequency_hz": 0.0
+      },
+      "maximum_by_field": {
+        "consumption_kwh": 0.288,
+        "voltage_v": 623.71,
+        "current_a": 126.05,
+        "frequency_hz": 143.82
+      },
+      "zero_consumption_rows": 475664,
+      "duplicate_key_rows_within_chunks": 0,
+      "duplicate_key_rows_at_chunk_boundaries": 0,
+      "duplicate_detection_note": "duplicates are retained; within-chunk and adjacent-boundary counts only, not a global deduplication scan"
+    },
+    {
+      "source_file": "SM Cleaned Data MH Aggregated.csv",
+      "source_sha256": "ae79e4775b477d781d317864b2ff60d113f509a034774784f383d82a7ee034f1",
+      "mode": "daily_aggregate",
+      "location": "Mathura",
+      "output_file": null,
+      "row_count_processed": 16491,
+      "is_complete_source": true,
+      "meter_count": 38,
+      "timestamp_start": "2019-05-01T00:00:00",
+      "timestamp_end": "2021-02-20T00:00:00",
+      "observed_positive_intervals_seconds_top20": {
+        "86400": 14112,
+        "172800": 1124,
+        "259200": 460,
+        "345600": 215,
+        "432000": 134,
+        "518400": 80,
+        "604800": 69,
+        "691200": 53,
+        "777600": 38,
+        "864000": 32,
+        "1209600": 16,
+        "1123200": 15,
+        "1036800": 15,
+        "950400": 12,
+        "1296000": 10,
+        "1382400": 7,
+        "1555200": 7,
+        "1728000": 6,
+        "1814400": 5,
+        "1641600": 5
+      },
+      "nonpositive_timestamp_steps": 0,
+      "out_of_order_timestamp_steps": 0,
+      "valid_timestamp_rows": 16491,
+      "invalid_meter_rows": 0,
+      "missing_by_field": {
+        "consumption_kwh": 0
+      },
+      "invalid_numeric_by_field": {
+        "consumption_kwh": 0,
+        "voltage_v": 0,
+        "current_a": 0,
+        "frequency_hz": 0
+      },
+      "optional_fields_absent_from_source": [
+        "voltage_v",
+        "current_a",
+        "frequency_hz"
+      ],
+      "negative_readings_by_field": {
+        "consumption_kwh": 0
+      },
+      "zero_readings_by_field": {
+        "consumption_kwh": 143
+      },
+      "minimum_by_field": {
+        "consumption_kwh": 0.0
+      },
+      "maximum_by_field": {
+        "consumption_kwh": 62.12300000000009
+      },
+      "zero_consumption_rows": 143,
+      "duplicate_key_rows_within_chunks": 0,
+      "duplicate_key_rows_at_chunk_boundaries": 0,
+      "duplicate_detection_note": "duplicates are retained; within-chunk and adjacent-boundary counts only, not a global deduplication scan"
+    },
+    {
+      "source_file": "SM Cleaned Data MH2021.csv",
+      "source_sha256": "1a0cdf746fe85b55a135b2a13a48f1cc0d7d5046db534f76ba0c6a80846249ab",
+      "mode": "high_frequency",
+      "location": "Mathura",
+      "output_file": null,
+      "row_count_processed": 550560,
+      "is_complete_source": true,
+      "meter_count": 35,
+      "timestamp_start": "2021-01-01T00:00:00",
+      "timestamp_end": "2021-02-20T23:57:00",
+      "observed_positive_intervals_seconds_top20": {
+        "180": 550264,
+        "86580": 146,
+        "172980": 61,
+        "259380": 23,
+        "345780": 10,
+        "432180": 8,
+        "518580": 5,
+        "604980": 3,
+        "691380": 3,
+        "777780": 1,
+        "2505780": 1
+      },
+      "nonpositive_timestamp_steps": 0,
+      "out_of_order_timestamp_steps": 0,
+      "valid_timestamp_rows": 550560,
+      "invalid_meter_rows": 0,
+      "missing_by_field": {
+        "consumption_kwh": 0,
+        "voltage_v": 0,
+        "current_a": 0,
+        "frequency_hz": 0
+      },
+      "invalid_numeric_by_field": {
+        "consumption_kwh": 0,
+        "voltage_v": 0,
+        "current_a": 0,
+        "frequency_hz": 0
+      },
+      "optional_fields_absent_from_source": [],
+      "negative_readings_by_field": {
+        "consumption_kwh": 0,
+        "voltage_v": 0,
+        "current_a": 0,
+        "frequency_hz": 0
+      },
+      "zero_readings_by_field": {
+        "consumption_kwh": 114476,
+        "voltage_v": 66595,
+        "current_a": 79572,
+        "frequency_hz": 66595
+      },
+      "minimum_by_field": {
+        "consumption_kwh": 0.0,
+        "voltage_v": 0.0,
+        "current_a": 0.0,
+        "frequency_hz": 0.0
+      },
+      "maximum_by_field": {
+        "consumption_kwh": 0.232,
+        "voltage_v": 654.73,
+        "current_a": 18.29,
+        "frequency_hz": 74.76
+      },
+      "zero_consumption_rows": 114476,
+      "duplicate_key_rows_within_chunks": 0,
+      "duplicate_key_rows_at_chunk_boundaries": 0,
+      "duplicate_detection_note": "duplicates are retained; within-chunk and adjacent-boundary counts only, not a global deduplication scan"
+    }
+  ],
+  "distinct_meter_count_by_location": {
+    "Bareilly": 46,
+    "Mathura": 38
+  },
+  "license": "Harvard Dataverse record reports CC0 1.0; cite dataset DOI and verify the exact acquired version metadata",
+  "preprocessing": "canonical columns, parsed timestamps, numeric coercion with invalid/missing values preserved as null, all rows retained, no imputation or synthetic labels"
+}

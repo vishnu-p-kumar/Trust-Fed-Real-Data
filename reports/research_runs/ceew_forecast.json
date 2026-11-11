@@ -1,0 +1,1038 @@
+{
+  "task": "CEEW unlabeled consumption forecast seed sensitivity study",
+  "protocol": {
+    "seeds": [
+      42,
+      43,
+      44,
+      45,
+      46
+    ],
+    "seed_variation": "meter-to-client assignment only; each run uses the same chronological per-meter split",
+    "intervals": "95% Student t intervals summarize client-allocation sensitivity, not population sampling uncertainty",
+    "hyperparameter_selection": "validation FedAvg MAE independently per seed; final test is not used for selection"
+  },
+  "summary": {
+    "metrics": {
+      "validation": {
+        "centralized": {
+          "mae_kwh": {
+            "mean": 1.872262602636615,
+            "std": 0.0,
+            "ci95_t": [
+              1.872262602636615,
+              1.872262602636615
+            ],
+            "n": 5
+          },
+          "rmse_kwh": {
+            "mean": 3.5892110402062514,
+            "std": 0.0,
+            "ci95_t": [
+              3.5892110402062514,
+              3.5892110402062514
+            ],
+            "n": 5
+          },
+          "wape": {
+            "mean": 0.2087084925200941,
+            "std": 3.1031676915590914e-17,
+            "ci95_t": [
+              0.20870849252009407,
+              0.20870849252009413
+            ],
+            "n": 5
+          }
+        },
+        "fedavg": {
+          "mae_kwh": {
+            "mean": 1.8768979267154742,
+            "std": 0.0025684874312968996,
+            "ci95_t": [
+              1.8737092396178427,
+              1.8800866138131056
+            ],
+            "n": 5
+          },
+          "rmse_kwh": {
+            "mean": 3.597124723494634,
+            "std": 0.004408889844806963,
+            "ci95_t": [
+              3.5916512413230994,
+              3.6025982056661685
+            ],
+            "n": 5
+          },
+          "wape": {
+            "mean": 0.2092252103669808,
+            "std": 0.0002863194185943199,
+            "ci95_t": [
+              0.20886975484683756,
+              0.20958066588712404
+            ],
+            "n": 5
+          }
+        },
+        "local_only": {
+          "mae_kwh": {
+            "mean": 1.8651411556141553,
+            "std": 0.008782302581832662,
+            "ci95_t": [
+              1.8542382348566089,
+              1.8760440763717017
+            ],
+            "n": 5
+          },
+          "rmse_kwh": {
+            "mean": 3.5751804177856186,
+            "std": 0.0179701420966508,
+            "ci95_t": [
+              3.5528711163858997,
+              3.5974897191853374
+            ],
+            "n": 5
+          },
+          "wape": {
+            "mean": 0.2079146367487263,
+            "std": 0.00097899788743757,
+            "ci95_t": [
+              0.20669924519405386,
+              0.20913002830339872
+            ],
+            "n": 5
+          }
+        },
+        "persistence": {
+          "mae_kwh": {
+            "mean": 1.672572856932804,
+            "std": 0.0,
+            "ci95_t": [
+              1.672572856932804,
+              1.672572856932804
+            ],
+            "n": 5
+          },
+          "rmse_kwh": {
+            "mean": 3.122162859373752,
+            "std": 0.0,
+            "ci95_t": [
+              3.122162859373752,
+              3.122162859373752
+            ],
+            "n": 5
+          },
+          "wape": {
+            "mean": 0.18644828941670907,
+            "std": 0.0,
+            "ci95_t": [
+              0.18644828941670907,
+              0.18644828941670907
+            ],
+            "n": 5
+          }
+        },
+        "trimmed_mean": {
+          "mae_kwh": {
+            "mean": 1.876239084387074,
+            "std": 0.006638474535306365,
+            "ci95_t": [
+              1.8679976509890537,
+              1.8844805177850943
+            ],
+            "n": 5
+          },
+          "rmse_kwh": {
+            "mean": 3.5951485452437857,
+            "std": 0.012366915992854022,
+            "ci95_t": [
+              3.579795452609031,
+              3.6105016378785404
+            ],
+            "n": 5
+          },
+          "wape": {
+            "mean": 0.20915176661556728,
+            "std": 0.0007400169244131023,
+            "ci95_t": [
+              0.20823306154808194,
+              0.21007047168305262
+            ],
+            "n": 5
+          }
+        }
+      },
+      "test": {
+        "centralized": {
+          "mae_kwh": {
+            "mean": 2.128740376205665,
+            "std": 0.0,
+            "ci95_t": [
+              2.128740376205665,
+              2.128740376205665
+            ],
+            "n": 5
+          },
+          "rmse_kwh": {
+            "mean": 3.9280723400280992,
+            "std": 0.0,
+            "ci95_t": [
+              3.9280723400280992,
+              3.9280723400280992
+            ],
+            "n": 5
+          },
+          "wape": {
+            "mean": 0.23773712280540082,
+            "std": 0.0,
+            "ci95_t": [
+              0.23773712280540082,
+              0.23773712280540082
+            ],
+            "n": 5
+          }
+        },
+        "fedavg": {
+          "mae_kwh": {
+            "mean": 2.132958162752747,
+            "std": 0.002316898095367332,
+            "ci95_t": [
+              2.130081814995229,
+              2.135834510510265
+            ],
+            "n": 5
+          },
+          "rmse_kwh": {
+            "mean": 3.9365114141054827,
+            "std": 0.004681347568912565,
+            "ci95_t": [
+              3.930699685221537,
+              3.9423231429894283
+            ],
+            "n": 5
+          },
+          "wape": {
+            "mean": 0.23820816401339345,
+            "std": 0.00025875052363489914,
+            "ci95_t": [
+              0.23788693430980742,
+              0.23852939371697948
+            ],
+            "n": 5
+          }
+        },
+        "local_only": {
+          "mae_kwh": {
+            "mean": 2.1281763928536463,
+            "std": 0.006872357917621848,
+            "ci95_t": [
+              2.119644601436174,
+              2.136708184271119
+            ],
+            "n": 5
+          },
+          "rmse_kwh": {
+            "mean": 3.924750966507477,
+            "std": 0.015525725686985086,
+            "ci95_t": [
+              3.905476322381827,
+              3.944025610633127
+            ],
+            "n": 5
+          },
+          "wape": {
+            "mean": 0.23767413730424827,
+            "std": 0.000767502987441092,
+            "ci95_t": [
+              0.2367213092531446,
+              0.23862696535535194
+            ],
+            "n": 5
+          }
+        },
+        "persistence": {
+          "mae_kwh": {
+            "mean": 1.9787438935205504,
+            "std": 0.0,
+            "ci95_t": [
+              1.9787438935205504,
+              1.9787438935205504
+            ],
+            "n": 5
+          },
+          "rmse_kwh": {
+            "mean": 3.8634307343033476,
+            "std": 0.0,
+            "ci95_t": [
+              3.8634307343033476,
+              3.8634307343033476
+            ],
+            "n": 5
+          },
+          "wape": {
+            "mean": 0.22098555806642112,
+            "std": 3.1031676915590914e-17,
+            "ci95_t": [
+              0.2209855580664211,
+              0.22098555806642114
+            ],
+            "n": 5
+          }
+        },
+        "trimmed_mean": {
+          "mae_kwh": {
+            "mean": 2.132803807200939,
+            "std": 0.006062885204437205,
+            "ci95_t": [
+              2.1252769477776683,
+              2.1403306666242097
+            ],
+            "n": 5
+          },
+          "rmse_kwh": {
+            "mean": 3.9342452065832525,
+            "std": 0.012359715528741136,
+            "ci95_t": [
+              3.9189010530722537,
+              3.9495893600942513
+            ],
+            "n": 5
+          },
+          "wape": {
+            "mean": 0.23819092562904842,
+            "std": 0.0006771013039041839,
+            "ci95_t": [
+              0.23735032809867293,
+              0.23903152315942391
+            ],
+            "n": 5
+          }
+        }
+      }
+    },
+    "test_mae_difference_vs_persistence": {
+      "centralized": {
+        "mean": 0.14999648268511456,
+        "std": 0.0,
+        "ci95_t": [
+          0.14999648268511456,
+          0.14999648268511456
+        ],
+        "n": 5
+      },
+      "fedavg": {
+        "mean": 0.15421426923219667,
+        "std": 0.002316898095367332,
+        "ci95_t": [
+          0.1513379214746785,
+          0.15709061698971483
+        ],
+        "n": 5
+      },
+      "trimmed_mean": {
+        "mean": 0.15405991368038863,
+        "std": 0.006062885204437205,
+        "ci95_t": [
+          0.14653305425711813,
+          0.16158677310365913
+        ],
+        "n": 5
+      },
+      "local_only": {
+        "mean": 0.149432499333096,
+        "std": 0.006872357917621848,
+        "ci95_t": [
+          0.14090070791562329,
+          0.1579642907505687
+        ],
+        "n": 5
+      }
+    }
+  },
+  "runs": [
+    {
+      "task": "next-interval consumption forecast; not theft detection",
+      "label_status": "no verified theft labels; no theft labels were created or used",
+      "config": {
+        "clients": 4,
+        "rounds": 3,
+        "local_epochs": 5,
+        "learning_rate": 0.1,
+        "seed": 42,
+        "interval": "1 days 00:00:00",
+        "client_partition": "whole meter groups assigned once; deterministic seed",
+        "split": "per-meter chronological 60/20/20 by forecast target timestamp",
+        "features": [
+          "x_lag1",
+          "x_lag7",
+          "x_weekday_sin",
+          "x_weekday_cos",
+          "x_day_sin",
+          "x_day_cos"
+        ],
+        "preprocessing": "fixed log1p consumption transform and calendar sine/cosine; no fitted feature transforms"
+      },
+      "hyperparameter_selection": {
+        "selected_learning_rate": 0.1,
+        "selection_metric": "FedAvg validation MAE in kWh",
+        "validation_candidates": [
+          {
+            "learning_rate": 0.01,
+            "validation_mae_kwh": 4.044209595323549
+          },
+          {
+            "learning_rate": 0.03,
+            "validation_mae_kwh": 1.952452759192866
+          },
+          {
+            "learning_rate": 0.05,
+            "validation_mae_kwh": 1.917403177076205
+          },
+          {
+            "learning_rate": 0.1,
+            "validation_mae_kwh": 1.873016622745806
+          }
+        ]
+      },
+      "quality": {
+        "invalid_rows_excluded": 0,
+        "duplicate_key_rows_excluded": 0
+      },
+      "counts": {
+        "meters": 84,
+        "examples": 34011,
+        "train": 20373,
+        "test": 6837,
+        "validation": 6801
+      },
+      "client_row_counts": {
+        "client_000": 9785,
+        "client_001": 7906,
+        "client_002": 8342,
+        "client_003": 7978
+      },
+      "metrics": {
+        "validation": {
+          "centralized": {
+            "n": 6801,
+            "mae_kwh": 1.872262602636615,
+            "rmse_kwh": 3.5892110402062514,
+            "wape": 0.20870849252009413
+          },
+          "fedavg": {
+            "n": 6801,
+            "mae_kwh": 1.873016622745806,
+            "rmse_kwh": 3.5904917232609006,
+            "wape": 0.2087925461139102
+          },
+          "trimmed_mean": {
+            "n": 6801,
+            "mae_kwh": 1.8722718614917004,
+            "rmse_kwh": 3.5894899305550125,
+            "wape": 0.20870952464116765
+          },
+          "local_only": {
+            "n": 6801,
+            "mae_kwh": 1.8626865601944145,
+            "rmse_kwh": 3.5741107789912996,
+            "wape": 0.20764101332160692
+          },
+          "persistence": {
+            "n": 6801,
+            "mae_kwh": 1.672572856932804,
+            "rmse_kwh": 3.122162859373752,
+            "wape": 0.18644828941670907
+          }
+        },
+        "test": {
+          "centralized": {
+            "n": 6837,
+            "mae_kwh": 2.128740376205665,
+            "rmse_kwh": 3.9280723400280992,
+            "wape": 0.23773712280540082
+          },
+          "fedavg": {
+            "n": 6837,
+            "mae_kwh": 2.1294296636587275,
+            "rmse_kwh": 3.929431796377359,
+            "wape": 0.23781410223309835
+          },
+          "trimmed_mean": {
+            "n": 6837,
+            "mae_kwh": 2.128696097406997,
+            "rmse_kwh": 3.928084239562513,
+            "wape": 0.23773217776169595
+          },
+          "local_only": {
+            "n": 6837,
+            "mae_kwh": 2.1360483731694884,
+            "rmse_kwh": 3.9402852738163356,
+            "wape": 0.23855327783824082
+          },
+          "persistence": {
+            "n": 6837,
+            "mae_kwh": 1.9787438935205504,
+            "rmse_kwh": 3.8634307343033476,
+            "wape": 0.2209855580664211
+          }
+        }
+      },
+      "forecast_residual_anomaly_proxy": {
+        "definition": "absolute next-interval forecast residual; not a theft label or validated theft detector",
+        "threshold_quantile_selected_on_validation": 0.99,
+        "threshold_kwh": 14.810351675514488,
+        "test_rows_above_threshold": 87,
+        "test_rows": 6837
+      },
+      "communication_bytes_estimate_fedavg": 1344,
+      "privacy": "single-process simulation; no DP or secure aggregation"
+    },
+    {
+      "task": "next-interval consumption forecast; not theft detection",
+      "label_status": "no verified theft labels; no theft labels were created or used",
+      "config": {
+        "clients": 4,
+        "rounds": 3,
+        "local_epochs": 5,
+        "learning_rate": 0.1,
+        "seed": 43,
+        "interval": "1 days 00:00:00",
+        "client_partition": "whole meter groups assigned once; deterministic seed",
+        "split": "per-meter chronological 60/20/20 by forecast target timestamp",
+        "features": [
+          "x_lag1",
+          "x_lag7",
+          "x_weekday_sin",
+          "x_weekday_cos",
+          "x_day_sin",
+          "x_day_cos"
+        ],
+        "preprocessing": "fixed log1p consumption transform and calendar sine/cosine; no fitted feature transforms"
+      },
+      "hyperparameter_selection": {
+        "selected_learning_rate": 0.1,
+        "selection_metric": "FedAvg validation MAE in kWh",
+        "validation_candidates": [
+          {
+            "learning_rate": 0.01,
+            "validation_mae_kwh": 4.054108672218722
+          },
+          {
+            "learning_rate": 0.03,
+            "validation_mae_kwh": 1.9566154071224477
+          },
+          {
+            "learning_rate": 0.05,
+            "validation_mae_kwh": 1.9217089256249544
+          },
+          {
+            "learning_rate": 0.1,
+            "validation_mae_kwh": 1.877435704461112
+          }
+        ]
+      },
+      "quality": {
+        "invalid_rows_excluded": 0,
+        "duplicate_key_rows_excluded": 0
+      },
+      "counts": {
+        "meters": 84,
+        "examples": 34011,
+        "train": 20373,
+        "test": 6837,
+        "validation": 6801
+      },
+      "client_row_counts": {
+        "client_000": 7485,
+        "client_001": 9151,
+        "client_002": 9327,
+        "client_003": 8048
+      },
+      "metrics": {
+        "validation": {
+          "centralized": {
+            "n": 6801,
+            "mae_kwh": 1.872262602636615,
+            "rmse_kwh": 3.5892110402062514,
+            "wape": 0.20870849252009413
+          },
+          "fedavg": {
+            "n": 6801,
+            "mae_kwh": 1.877435704461112,
+            "rmse_kwh": 3.5980444788545918,
+            "wape": 0.20928515857213367
+          },
+          "trimmed_mean": {
+            "n": 6801,
+            "mae_kwh": 1.8730755428296004,
+            "rmse_kwh": 3.5908205027969533,
+            "wape": 0.20879911416790572
+          },
+          "local_only": {
+            "n": 6801,
+            "mae_kwh": 1.8639101020095372,
+            "rmse_kwh": 3.5734830448134702,
+            "wape": 0.20777740635077382
+          },
+          "persistence": {
+            "n": 6801,
+            "mae_kwh": 1.672572856932804,
+            "rmse_kwh": 3.122162859373752,
+            "wape": 0.18644828941670907
+          }
+        },
+        "test": {
+          "centralized": {
+            "n": 6837,
+            "mae_kwh": 2.128740376205665,
+            "rmse_kwh": 3.9280723400280992,
+            "wape": 0.23773712280540082
+          },
+          "fedavg": {
+            "n": 6837,
+            "mae_kwh": 2.1334473239317164,
+            "rmse_kwh": 3.93749521919102,
+            "wape": 0.23826279339543371
+          },
+          "trimmed_mean": {
+            "n": 6837,
+            "mae_kwh": 2.1281796385340326,
+            "rmse_kwh": 3.9307166545410097,
+            "wape": 0.23767449978091532
+          },
+          "local_only": {
+            "n": 6837,
+            "mae_kwh": 2.131611603726152,
+            "rmse_kwh": 3.93581204878869,
+            "wape": 0.2380577806823642
+          },
+          "persistence": {
+            "n": 6837,
+            "mae_kwh": 1.9787438935205504,
+            "rmse_kwh": 3.8634307343033476,
+            "wape": 0.2209855580664211
+          }
+        }
+      },
+      "forecast_residual_anomaly_proxy": {
+        "definition": "absolute next-interval forecast residual; not a theft label or validated theft detector",
+        "threshold_quantile_selected_on_validation": 0.99,
+        "threshold_kwh": 14.83410407440699,
+        "test_rows_above_threshold": 87,
+        "test_rows": 6837
+      },
+      "communication_bytes_estimate_fedavg": 1344,
+      "privacy": "single-process simulation; no DP or secure aggregation"
+    },
+    {
+      "task": "next-interval consumption forecast; not theft detection",
+      "label_status": "no verified theft labels; no theft labels were created or used",
+      "config": {
+        "clients": 4,
+        "rounds": 3,
+        "local_epochs": 5,
+        "learning_rate": 0.1,
+        "seed": 44,
+        "interval": "1 days 00:00:00",
+        "client_partition": "whole meter groups assigned once; deterministic seed",
+        "split": "per-meter chronological 60/20/20 by forecast target timestamp",
+        "features": [
+          "x_lag1",
+          "x_lag7",
+          "x_weekday_sin",
+          "x_weekday_cos",
+          "x_day_sin",
+          "x_day_cos"
+        ],
+        "preprocessing": "fixed log1p consumption transform and calendar sine/cosine; no fitted feature transforms"
+      },
+      "hyperparameter_selection": {
+        "selected_learning_rate": 0.1,
+        "selection_metric": "FedAvg validation MAE in kWh",
+        "validation_candidates": [
+          {
+            "learning_rate": 0.01,
+            "validation_mae_kwh": 4.0513342571436155
+          },
+          {
+            "learning_rate": 0.03,
+            "validation_mae_kwh": 1.955407604881255
+          },
+          {
+            "learning_rate": 0.05,
+            "validation_mae_kwh": 1.9205144187686305
+          },
+          {
+            "learning_rate": 0.1,
+            "validation_mae_kwh": 1.8764387688550308
+          }
+        ]
+      },
+      "quality": {
+        "invalid_rows_excluded": 0,
+        "duplicate_key_rows_excluded": 0
+      },
+      "counts": {
+        "meters": 84,
+        "examples": 34011,
+        "train": 20373,
+        "test": 6837,
+        "validation": 6801
+      },
+      "client_row_counts": {
+        "client_000": 8748,
+        "client_001": 8100,
+        "client_002": 7995,
+        "client_003": 9168
+      },
+      "metrics": {
+        "validation": {
+          "centralized": {
+            "n": 6801,
+            "mae_kwh": 1.872262602636615,
+            "rmse_kwh": 3.5892110402062514,
+            "wape": 0.20870849252009413
+          },
+          "fedavg": {
+            "n": 6801,
+            "mae_kwh": 1.8764387688550308,
+            "rmse_kwh": 3.5962809687626196,
+            "wape": 0.2091740262303394
+          },
+          "trimmed_mean": {
+            "n": 6801,
+            "mae_kwh": 1.8708409290195194,
+            "rmse_kwh": 3.5840368965221776,
+            "wape": 0.2085500129579527
+          },
+          "local_only": {
+            "n": 6801,
+            "mae_kwh": 1.8704077075064731,
+            "rmse_kwh": 3.578858547158009,
+            "wape": 0.20850172004819323
+          },
+          "persistence": {
+            "n": 6801,
+            "mae_kwh": 1.672572856932804,
+            "rmse_kwh": 3.122162859373752,
+            "wape": 0.18644828941670907
+          }
+        },
+        "test": {
+          "centralized": {
+            "n": 6837,
+            "mae_kwh": 2.128740376205665,
+            "rmse_kwh": 3.9280723400280992,
+            "wape": 0.23773712280540082
+          },
+          "fedavg": {
+            "n": 6837,
+            "mae_kwh": 2.132597073533612,
+            "rmse_kwh": 3.935657377099348,
+            "wape": 0.2381678376715846
+          },
+          "trimmed_mean": {
+            "n": 6837,
+            "mae_kwh": 2.129330210827993,
+            "rmse_kwh": 3.922093468898537,
+            "wape": 0.23780299536910593
+          },
+          "local_only": {
+            "n": 6837,
+            "mae_kwh": 2.1183814515543875,
+            "rmse_kwh": 3.9024529351670845,
+            "wape": 0.2365802410318037
+          },
+          "persistence": {
+            "n": 6837,
+            "mae_kwh": 1.9787438935205504,
+            "rmse_kwh": 3.8634307343033476,
+            "wape": 0.2209855580664211
+          }
+        }
+      },
+      "forecast_residual_anomaly_proxy": {
+        "definition": "absolute next-interval forecast residual; not a theft label or validated theft detector",
+        "threshold_quantile_selected_on_validation": 0.99,
+        "threshold_kwh": 14.828248453848929,
+        "test_rows_above_threshold": 87,
+        "test_rows": 6837
+      },
+      "communication_bytes_estimate_fedavg": 1344,
+      "privacy": "single-process simulation; no DP or secure aggregation"
+    },
+    {
+      "task": "next-interval consumption forecast; not theft detection",
+      "label_status": "no verified theft labels; no theft labels were created or used",
+      "config": {
+        "clients": 4,
+        "rounds": 3,
+        "local_epochs": 5,
+        "learning_rate": 0.1,
+        "seed": 45,
+        "interval": "1 days 00:00:00",
+        "client_partition": "whole meter groups assigned once; deterministic seed",
+        "split": "per-meter chronological 60/20/20 by forecast target timestamp",
+        "features": [
+          "x_lag1",
+          "x_lag7",
+          "x_weekday_sin",
+          "x_weekday_cos",
+          "x_day_sin",
+          "x_day_cos"
+        ],
+        "preprocessing": "fixed log1p consumption transform and calendar sine/cosine; no fitted feature transforms"
+      },
+      "hyperparameter_selection": {
+        "selected_learning_rate": 0.1,
+        "selection_metric": "FedAvg validation MAE in kWh",
+        "validation_candidates": [
+          {
+            "learning_rate": 0.01,
+            "validation_mae_kwh": 4.058379769844674
+          },
+          {
+            "learning_rate": 0.03,
+            "validation_mae_kwh": 1.9586482111553178
+          },
+          {
+            "learning_rate": 0.05,
+            "validation_mae_kwh": 1.9239517931627963
+          },
+          {
+            "learning_rate": 0.1,
+            "validation_mae_kwh": 1.8801397455882258
+          }
+        ]
+      },
+      "quality": {
+        "invalid_rows_excluded": 0,
+        "duplicate_key_rows_excluded": 0
+      },
+      "counts": {
+        "meters": 84,
+        "examples": 34011,
+        "train": 20373,
+        "test": 6837,
+        "validation": 6801
+      },
+      "client_row_counts": {
+        "client_000": 7170,
+        "client_001": 9428,
+        "client_002": 7591,
+        "client_003": 9822
+      },
+      "metrics": {
+        "validation": {
+          "centralized": {
+            "n": 6801,
+            "mae_kwh": 1.872262602636615,
+            "rmse_kwh": 3.5892110402062514,
+            "wape": 0.20870849252009413
+          },
+          "fedavg": {
+            "n": 6801,
+            "mae_kwh": 1.8801397455882258,
+            "rmse_kwh": 3.6027163978119927,
+            "wape": 0.2095865886955349
+          },
+          "trimmed_mean": {
+            "n": 6801,
+            "mae_kwh": 1.877871939465745,
+            "rmse_kwh": 3.5953301386537557,
+            "wape": 0.20933378740767908
+          },
+          "local_only": {
+            "n": 6801,
+            "mae_kwh": 1.8760123641634279,
+            "rmse_kwh": 3.5999610940664843,
+            "wape": 0.2091264932185372
+          },
+          "persistence": {
+            "n": 6801,
+            "mae_kwh": 1.672572856932804,
+            "rmse_kwh": 3.122162859373752,
+            "wape": 0.18644828941670907
+          }
+        },
+        "test": {
+          "centralized": {
+            "n": 6837,
+            "mae_kwh": 2.128740376205665,
+            "rmse_kwh": 3.9280723400280992,
+            "wape": 0.23773712280540082
+          },
+          "fedavg": {
+            "n": 6837,
+            "mae_kwh": 2.135856425744975,
+            "rmse_kwh": 3.9424041495451934,
+            "wape": 0.2385318412041901
+          },
+          "trimmed_mean": {
+            "n": 6837,
+            "mae_kwh": 2.135572972009047,
+            "rmse_kwh": 3.9358262123538457,
+            "wape": 0.23850018517117583
+          },
+          "local_only": {
+            "n": 6837,
+            "mae_kwh": 2.124414927608856,
+            "rmse_kwh": 3.9157431860562233,
+            "wape": 0.23725405793016188
+          },
+          "persistence": {
+            "n": 6837,
+            "mae_kwh": 1.9787438935205504,
+            "rmse_kwh": 3.8634307343033476,
+            "wape": 0.2209855580664211
+          }
+        }
+      },
+      "forecast_residual_anomaly_proxy": {
+        "definition": "absolute next-interval forecast residual; not a theft label or validated theft detector",
+        "threshold_quantile_selected_on_validation": 0.99,
+        "threshold_kwh": 14.826777844098142,
+        "test_rows_above_threshold": 87,
+        "test_rows": 6837
+      },
+      "communication_bytes_estimate_fedavg": 1344,
+      "privacy": "single-process simulation; no DP or secure aggregation"
+    },
+    {
+      "task": "next-interval consumption forecast; not theft detection",
+      "label_status": "no verified theft labels; no theft labels were created or used",
+      "config": {
+        "clients": 4,
+        "rounds": 3,
+        "local_epochs": 5,
+        "learning_rate": 0.1,
+        "seed": 46,
+        "interval": "1 days 00:00:00",
+        "client_partition": "whole meter groups assigned once; deterministic seed",
+        "split": "per-meter chronological 60/20/20 by forecast target timestamp",
+        "features": [
+          "x_lag1",
+          "x_lag7",
+          "x_weekday_sin",
+          "x_weekday_cos",
+          "x_day_sin",
+          "x_day_cos"
+        ],
+        "preprocessing": "fixed log1p consumption transform and calendar sine/cosine; no fitted feature transforms"
+      },
+      "hyperparameter_selection": {
+        "selected_learning_rate": 0.1,
+        "selection_metric": "FedAvg validation MAE in kWh",
+        "validation_candidates": [
+          {
+            "learning_rate": 0.01,
+            "validation_mae_kwh": 4.052628093525943
+          },
+          {
+            "learning_rate": 0.03,
+            "validation_mae_kwh": 1.9563684943312654
+          },
+          {
+            "learning_rate": 0.05,
+            "validation_mae_kwh": 1.9215908619849027
+          },
+          {
+            "learning_rate": 0.1,
+            "validation_mae_kwh": 1.8774587919271961
+          }
+        ]
+      },
+      "quality": {
+        "invalid_rows_excluded": 0,
+        "duplicate_key_rows_excluded": 0
+      },
+      "counts": {
+        "meters": 84,
+        "examples": 34011,
+        "train": 20373,
+        "test": 6837,
+        "validation": 6801
+      },
+      "client_row_counts": {
+        "client_000": 10312,
+        "client_001": 6976,
+        "client_002": 8122,
+        "client_003": 8601
+      },
+      "metrics": {
+        "validation": {
+          "centralized": {
+            "n": 6801,
+            "mae_kwh": 1.872262602636615,
+            "rmse_kwh": 3.5892110402062514,
+            "wape": 0.20870849252009413
+          },
+          "fedavg": {
+            "n": 6801,
+            "mae_kwh": 1.8774587919271961,
+            "rmse_kwh": 3.5980900487830647,
+            "wape": 0.2092877322229857
+          },
+          "trimmed_mean": {
+            "n": 6801,
+            "mae_kwh": 1.8871351491288055,
+            "rmse_kwh": 3.6160652576910297,
+            "wape": 0.21036639390313133
+          },
+          "local_only": {
+            "n": 6801,
+            "mae_kwh": 1.8526890441969237,
+            "rmse_kwh": 3.549488623898829,
+            "wape": 0.20652655080452018
+          },
+          "persistence": {
+            "n": 6801,
+            "mae_kwh": 1.672572856932804,
+            "rmse_kwh": 3.122162859373752,
+            "wape": 0.18644828941670907
+          }
+        },
+        "test": {
+          "centralized": {
+            "n": 6837,
+            "mae_kwh": 2.128740376205665,
+            "rmse_kwh": 3.9280723400280992,
+            "wape": 0.23773712280540082
+          },
+          "fedavg": {
+            "n": 6837,
+            "mae_kwh": 2.133460326894704,
+            "rmse_kwh": 3.9375685283144923,
+            "wape": 0.2382642455626605
+          },
+          "trimmed_mean": {
+            "n": 6837,
+            "mae_kwh": 2.142240117226626,
+            "rmse_kwh": 3.95450545756036,
+            "wape": 0.239244770062349
+          },
+          "local_only": {
+            "n": 6837,
+            "mae_kwh": 2.1304256082093476,
+            "rmse_kwh": 3.929461388709053,
+            "wape": 0.23792532903867072
+          },
+          "persistence": {
+            "n": 6837,
+            "mae_kwh": 1.9787438935205504,
+            "rmse_kwh": 3.8634307343033476,
+            "wape": 0.2209855580664211
+          }
+        }
+      },
+      "forecast_residual_anomaly_proxy": {
+        "definition": "absolute next-interval forecast residual; not a theft label or validated theft detector",
+        "threshold_quantile_selected_on_validation": 0.99,
+        "threshold_kwh": 14.834803148948032,
+        "test_rows_above_threshold": 87,
+        "test_rows": 6837
+      },
+      "communication_bytes_estimate_fedavg": 1344,
+      "privacy": "single-process simulation; no DP or secure aggregation"
+    }
+  ]
+}

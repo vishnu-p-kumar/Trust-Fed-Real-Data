@@ -1,0 +1,47 @@
+{
+  "release": "Trust-Fed-Grid-X publication upgrade",
+  "date": "2026-11-01",
+  "checksums_algorithm": "SHA-256",
+  "files": {
+    "src/federated/experiment.py": {
+      "sha256": "90e86384018a840e6554a4be3688017ea6e0157d9a629063bf5ff147d3d7d948",
+      "size_bytes": 41073
+    },
+    "tests/test_federated_upgrades.py": {
+      "sha256": "3506b3fc8ece4ec9e449cc8dc2b815c4bfbfc5fb4d2a7dfaf3e021bd67f5461f",
+      "size_bytes": 4071
+    },
+    "scripts/run_sgcc_adversarial_suite.py": {
+      "sha256": "41e099f49f74a4dd11997e8057ad6c311a2ec9eccb6e134b55d8460e0e237884",
+      "size_bytes": 7482
+    },
+    "docs/ADAPTIVE_TRUST_AWARE_RESEARCH_METHOD.md": {
+      "sha256": "1002d7b180984782fd0ad1a431f53ba340abc3d4d47aa5b60fa62f923f4f0b73",
+      "size_bytes": 5288
+    },
+    "docs/PUBLICATION_EXPERIMENTS_2026-11-01.md": {
+      "sha256": "9254c1bb196197250b4fc96b71a4140641aca9971669617a75ab8dcea0966263",
+      "size_bytes": 6006
+    },
+    "reports/research_runs/publication_robustness_2026-11-01.json": {
+      "sha256": "f39af9283d833496775cc1abe65d3f1e02f4bc7c42d92128ded97a73377f008d",
+      "size_bytes": 315831
+    },
+    "reports/research_runs/publication_privacy_utility_2026-11-01.json": {
+      "sha256": "f279137e2f9f3fabb60375ca4f2651231843897d13bd896b58cbd03f923eb7ae",
+      "size_bytes": 65779
+    },
+    "reports/research_runs/sgcc_adversarial_suite_2026-11-01.json": {
+      "sha256": "0307f7763348ed252d18bf2dc7d45edb01c572673d9ccd370cfd0f5463531014",
+      "size_bytes": 93380
+    },
+    "VERIFICATION_REPORT.md": {
+      "sha256": "2d5ea92e908a31b7e9fb9dd35aef5b76d0a4818a2887dd0a2e18875baeecf927",
+      "size_bytes": 3571
+    },
+    "README.md": {
+      "sha256": "360d8f827f9e0bac966863f0ab78751bcf05325f8d2bd869e65d13a9870ced18",
+      "size_bytes": 38304
+    }
+  }
+}

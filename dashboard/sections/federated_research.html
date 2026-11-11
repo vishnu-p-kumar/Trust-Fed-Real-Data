@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#07111f" />
+    <title>Federated Research | GridSentinel</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Source+Serif+4:wght@600;700&display=swap" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../style.css" />
+    <style>
+      .fr-page { max-width: 1600px; margin: 0 auto; }
+      .fr-hero { position: relative; display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; padding: clamp(24px, 4vw, 40px); margin-bottom: 20px; border-radius: var(--radius-xl); overflow: hidden; background: radial-gradient(ellipse at 92% 8%, rgba(56,189,248,.20), transparent 36%), linear-gradient(120deg, rgba(20,184,166,.16), rgba(56,189,248,.06) 58%, transparent), var(--panel-strong); }
+      .fr-hero::after { content: ""; position: absolute; width: 240px; height: 240px; right: 7%; bottom: -190px; border: 1px solid rgba(56,189,248,.28); border-radius: 50%; box-shadow: 0 0 0 28px rgba(56,189,248,.04), 0 0 0 58px rgba(56,189,248,.03); pointer-events: none; }
+      .fr-hero-copy { max-width: 760px; position: relative; z-index: 1; }
+      .fr-hero h2 { margin: 8px 0 10px; font: 700 clamp(1.8rem, 3vw, 2.6rem)/1.1 "Source Serif 4", Georgia, serif; }
+      .fr-hero p { margin: 0; max-width: 72ch; color: var(--muted); line-height: 1.65; }
+      .fr-hero-side { display: grid; gap: 12px; min-width: 190px; justify-items: end; position: relative; z-index: 1; }
+      .fr-sim-badge, .fr-private-badge, .fr-status { display: inline-flex; align-items: center; gap: 8px; border-radius: 999px; padding: 9px 13px; font-size: .78rem; font-weight: 700; white-space: nowrap; }
+      .fr-sim-badge { color: #7dd3fc; background: rgba(56,189,248,.12); border: 1px solid rgba(56,189,248,.2); }
+      .fr-private-badge { color: #fbbf24; background: rgba(245,158,11,.1); border: 1px solid rgba(245,158,11,.18); }
+      .fr-workspace { display: grid; grid-template-columns: minmax(280px, 340px) minmax(0, 1fr); gap: 20px; align-items: start; }
+      .fr-panel { min-width: 0; padding: 22px; border-radius: var(--radius-lg); }
+      .fr-panel h3 { margin: 0 0 6px; font-size: 1.05rem; }
+      .fr-panel-intro { margin: 0 0 18px; color: var(--muted); font-size: .88rem; line-height: 1.55; }
+      .fr-presets { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 18px; }
+      .fr-preset { border: 1px solid var(--border); border-radius: 999px; background: rgba(255,255,255,.035); color: var(--muted); padding: 7px 10px; font: inherit; font-size: .74rem; cursor: pointer; transition: .18s ease; }
+      .fr-preset:hover, .fr-preset:focus-visible { color: var(--ink); border-color: rgba(20,184,166,.5); background: rgba(20,184,166,.1); outline: none; }
+      .fr-form { display: grid; gap: 13px; }
+      .fr-field { display: grid; gap: 6px; min-width: 0; }
+      .fr-field label { color: var(--muted); font-size: .76rem; font-weight: 700; letter-spacing: .035em; }
+      .fr-field select, .fr-field input { width: 100%; min-height: 42px; border: 1px solid var(--border); border-radius: 12px; padding: 9px 11px; background: var(--panel-elevated); color: var(--ink); font: inherit; font-size: .88rem; }
+      .fr-field input:focus, .fr-field select:focus { outline: 2px solid rgba(20,184,166,.38); border-color: var(--accent); }
+      .fr-field option { color: #16263b; background: #fff; }
+      .fr-field-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 12px; }
+      .fr-field-hint { color: var(--muted); font-size: .7rem; line-height: 1.4; }
+      .fr-run-button { display: inline-flex; justify-content: center; align-items: center; gap: 9px; width: 100%; min-height: 46px; margin-top: 3px; border: 0; border-radius: 14px; background: linear-gradient(110deg, #0d9488, #0284c7); color: white; font: inherit; font-weight: 700; cursor: pointer; box-shadow: 0 12px 26px rgba(2,132,199,.2); transition: transform .18s ease, filter .18s ease; }
+      .fr-run-button:hover { transform: translateY(-1px); filter: brightness(1.08); }
+      .fr-run-button:disabled { opacity: .64; cursor: wait; transform: none; }
+      .fr-run-button .bi { font-size: 1rem; }
+      .fr-message { min-height: 20px; margin: 10px 0 0; color: var(--muted); font-size: .8rem; line-height: 1.5; }
+      .fr-message[data-kind="error"] { color: #fca5a5; }
+      .fr-message[data-kind="success"] { color: #86efac; }
+      .fr-results { display: grid; gap: 18px; min-width: 0; }
+      .fr-results-top { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+      .fr-results-top h3 { margin: 0; font-size: 1.06rem; }
+      .fr-results-top p { margin: 5px 0 0; color: var(--muted); font-size: .8rem; }
+      .fr-run-label { color: var(--muted); font-size: .76rem; text-align: right; }
+      .fr-kpis { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 12px; }
+      .fr-kpi { min-width: 0; padding: 17px; border-radius: 18px; }
+      .fr-kpi-label { display: block; color: var(--muted); font-size: .74rem; line-height: 1.4; }
+      .fr-kpi-value { display: block; margin-top: 8px; font-size: clamp(1.3rem, 2.2vw, 1.8rem); font-weight: 700; letter-spacing: -.04em; overflow-wrap: anywhere; }
+      .fr-kpi-note { display: block; margin-top: 5px; color: var(--muted); font-size: .69rem; }
+      .fr-card { min-width: 0; padding: 20px; border-radius: var(--radius-lg); }
+      .fr-card-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 15px; }
+      .fr-card-head h3 { margin: 0; font-size: 1rem; }
+      .fr-card-head p { margin: 5px 0 0; color: var(--muted); font-size: .78rem; line-height: 1.45; }
+      .fr-method-tag { display: inline-flex; align-items: center; gap: 6px; color: var(--accent); font-size: .72rem; font-weight: 700; white-space: nowrap; }
+      .fr-model-list { display: grid; gap: 13px; }
+      .fr-model-row { display: grid; grid-template-columns: 112px minmax(0,1fr) 72px; gap: 12px; align-items: center; }
+      .fr-model-name { font-size: .8rem; font-weight: 600; }
+      .fr-model-track, .fr-trust-track { height: 9px; overflow: hidden; border-radius: 999px; background: rgba(148,163,184,.15); }
+      .fr-model-fill, .fr-trust-fill { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg, #14b8a6, #38bdf8); transition: width .35s ease; }
+      .fr-model-value { color: var(--muted); font-variant-numeric: tabular-nums; font-size: .78rem; text-align: right; }
+      .fr-model-legend { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 17px; color: var(--muted); font-size: .72rem; }
+      .fr-model-legend label { display: inline-flex; align-items: center; gap: 7px; cursor: pointer; }
+      .fr-model-legend input { accent-color: var(--accent); }
+      .fr-lower-grid { display: grid; grid-template-columns: minmax(0,1.3fr) minmax(260px,.9fr); gap: 18px; }
+      .fr-table-wrap { width: 100%; overflow-x: auto; }
+      .fr-table { width: 100%; border-collapse: collapse; min-width: 510px; }
+      .fr-table th, .fr-table td { padding: 11px 10px; border-bottom: 1px solid var(--border); text-align: left; font-size: .76rem; white-space: nowrap; }
+      .fr-table th { color: var(--muted); font-size: .67rem; letter-spacing: .08em; text-transform: uppercase; }
+      .fr-table tbody tr:last-child td { border-bottom: 0; }
+      .fr-client-list { display: grid; gap: 11px; max-height: 300px; overflow: auto; padding-right: 4px; }
+      .fr-client { display: grid; grid-template-columns: 72px minmax(0,1fr) 42px; gap: 9px; align-items: center; }
+      .fr-client-id { font-size: .75rem; font-weight: 700; }
+      .fr-client-meta { display: flex; justify-content: space-between; gap: 8px; margin-bottom: 5px; color: var(--muted); font-size: .65rem; }
+      .fr-client .fr-trust-track { height: 6px; }
+      .fr-trust-fill.is-low { background: linear-gradient(90deg,#f97316,#ef4444); }
+      .fr-client-score { text-align: right; font-size: .72rem; font-variant-numeric: tabular-nums; }
+      .fr-client-flag { color: #fca5a5; }
+      .fr-rounds { display: grid; gap: 8px; }
+      .fr-round { display: grid; grid-template-columns: 54px minmax(0,1fr) 62px 64px; gap: 10px; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--border); font-size: .73rem; }
+      .fr-round:last-child { border-bottom: 0; }
+      .fr-round strong { font-size: .73rem; }
+      .fr-round-meter { height: 7px; background: rgba(148,163,184,.15); border-radius: 999px; overflow: hidden; }
+      .fr-round-meter span { display: block; height: 100%; background: linear-gradient(90deg,#14b8a6,#38bdf8); border-radius: inherit; }
+      .fr-round small { color: var(--muted); text-align: right; font-variant-numeric: tabular-nums; }
+      .fr-security-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 10px; }
+      .fr-security-stat { padding: 13px; border: 1px solid var(--border); border-radius: 14px; background: rgba(255,255,255,.025); }
+      .fr-security-stat span { display: block; color: var(--muted); font-size: .68rem; line-height: 1.4; }
+      .fr-security-stat strong { display: block; margin-top: 6px; font-size: 1rem; font-variant-numeric: tabular-nums; }
+      .fr-callout { display: flex; align-items: flex-start; gap: 10px; padding: 13px 14px; border: 1px solid rgba(245,158,11,.18); border-radius: 14px; background: rgba(245,158,11,.07); color: var(--muted); font-size: .75rem; line-height: 1.55; }
+      .fr-callout .bi { color: #fbbf24; }
+      .fr-history { display: grid; gap: 8px; }
+      .fr-history-item { display: flex; align-items: center; justify-content: space-between; gap: 10px; width: 100%; padding: 11px 12px; border: 1px solid var(--border); border-radius: 13px; background: rgba(255,255,255,.025); color: var(--ink); text-align: left; font: inherit; cursor: pointer; }
+      .fr-history-item:hover, .fr-history-item[aria-current="true"] { border-color: rgba(20,184,166,.42); background: rgba(20,184,166,.07); }
+      .fr-history-main { display: grid; gap: 4px; min-width: 0; }
+      .fr-history-main strong { font-size: .76rem; }
+      .fr-history-main span { color: var(--muted); font-size: .67rem; overflow: hidden; text-overflow: ellipsis; }
+      .fr-history-score { color: var(--accent); font-size: .78rem; font-weight: 700; white-space: nowrap; }
+      .fr-empty { display: grid; min-height: 125px; place-items: center; padding: 18px; border: 1px dashed var(--border); border-radius: 15px; color: var(--muted); text-align: center; font-size: .8rem; line-height: 1.5; }
+      .fr-spin { animation: fr-spin 1s linear infinite; }
+      @keyframes fr-spin { to { transform: rotate(360deg); } }
+      @media (max-width: 1120px) { .fr-workspace { grid-template-columns: minmax(260px,310px) minmax(0,1fr); } .fr-kpis { grid-template-columns: repeat(2,minmax(0,1fr)); } .fr-lower-grid { grid-template-columns: 1fr; } }
+      @media (max-width: 760px) { .fr-hero { align-items: flex-start; flex-direction: column; } .fr-hero-side { justify-items: start; } .fr-workspace { grid-template-columns: 1fr; } .fr-kpis { grid-template-columns: repeat(2,minmax(0,1fr)); } .fr-page { padding: 16px !important; } }
+      @media (max-width: 430px) { .fr-kpis { grid-template-columns: 1fr 1fr; gap: 8px; } .fr-kpi, .fr-card, .fr-panel { padding: 15px; } .fr-model-row { grid-template-columns: 92px minmax(0,1fr) 48px; gap: 8px; } .fr-security-grid { grid-template-columns: 1fr; } .fr-round { grid-template-columns: 42px minmax(0,1fr) 48px 52px; gap: 6px; } }
+    </style>
+  </head>
+  <body data-theme="dark">
+    <main class="dashboard-section fr-page">
+      <header class="fr-hero glass-panel">
+        <div class="fr-hero-copy">
+          <p class="eyebrow mb-0">Admin · Research Lab</p>
+          <h2>Federated learning experiments</h2>
+          <p>Compare aggregation strategies under simulated client imbalance and poisoning. Each run is an isolated research experiment; it does not retrain the production theft detector.</p>
+        </div>
+        <div class="fr-hero-side" aria-label="Experiment scope and privacy status">
+          <span class="fr-sim-badge"><i class="bi bi-cpu"></i> Synthetic fixture</span>
+          <span class="fr-private-badge"><i class="bi bi-shield-exclamation"></i> Differential privacy off</span>
+        </div>
+      </header>
+
+      <div class="fr-workspace">
+        <aside class="fr-panel glass-card" aria-labelledby="frSetupTitle">
+          <h3 id="frSetupTitle">Configure a run</h3>
+          <p class="fr-panel-intro">Set the data partition, attack scenario, and training budget for the local CPU simulation.</p>
+          <div class="fr-presets" aria-label="Experiment presets">
+            <button class="fr-preset" type="button" data-preset="baseline">Benign baseline</button>
+            <button class="fr-preset" type="button" data-preset="non-iid">Severe non-IID</button>
+            <button class="fr-preset" type="button" data-preset="poisoning">Sign attack</button>
+          </div>
+
+          <form class="fr-form" id="frExperimentForm">
+            <div class="fr-field">
+              <label for="frPartition">Client data partition</label>
+              <select id="frPartition" name="partition"><option value="iid">IID · balanced</option><option value="moderate" selected>Moderate non-IID</option><option value="severe">Severe non-IID</option></select>
+              <span class="fr-field-hint">Controls how differently client datasets are distributed.</span>
+            </div>
+            <div class="fr-field">
+              <label for="frAttack">Simulated client behavior</label>
+              <select id="frAttack" name="attack"><option value="none">No attack · benign run</option><option value="label_flip">Label flip</option><option value="scale">Update scale</option><option value="sign">Sign / direction</option><option value="slow">Slow poisoning</option></select>
+            </div>
+            <div class="fr-field-grid">
+              <div class="fr-field"><label for="frClients">Clients</label><input id="frClients" name="clients" type="number" min="3" max="32" value="8" required /></div>
+              <div class="fr-field"><label for="frRounds">Rounds</label><input id="frRounds" name="rounds" type="number" min="1" max="30" value="5" required /></div>
+              <div class="fr-field"><label for="frEpochs">Local epochs</label><input id="frEpochs" name="local_epochs" type="number" min="1" max="10" value="2" required /></div>
+              <div class="fr-field"><label for="frBatch">Batch size</label><input id="frBatch" name="batch_size" type="number" min="8" max="512" step="8" value="64" required /></div>
+              <div class="fr-field"><label for="frLearningRate">Learning rate</label><input id="frLearningRate" name="learning_rate" type="number" min="0.001" max="1" step="0.01" value="0.12" required /></div>
+              <div class="fr-field"><label for="frSeed">Random seed</label><input id="frSeed" name="seed" type="number" min="0" value="42" required /></div>
+              <div class="fr-field"><label for="frMaliciousFraction">Attacked clients</label><input id="frMaliciousFraction" name="malicious_fraction" type="number" min="0" max="0.45" step="0.05" value="0.25" required /></div>
+              <div class="fr-field"><label for="frAttackIntensity">Attack intensity</label><input id="frAttackIntensity" name="attack_intensity" type="number" min="0.1" max="20" step="0.5" value="4" required /></div>
+            </div>
+            <button class="fr-run-button" id="frRunButton" type="submit"><i class="bi bi-play-fill" aria-hidden="true"></i><span>Run experiment</span></button>
+          </form>
+          <p class="fr-message" id="frStatus" role="status" aria-live="polite">Ready. Results are saved as a local research artifact.</p>
+        </aside>
+
+        <section class="fr-results" aria-label="Federated experiment results">
+          <div class="fr-results-top">
+            <div><h3>Run results</h3><p id="frRunDescription">Run a simulation to compare global models and client behavior.</p></div>
+            <span class="fr-run-label" id="frRunId">No run selected</span>
+          </div>
+
+          <div class="fr-kpis" aria-live="polite">
+            <article class="fr-kpi glass-card"><span class="fr-kpi-label">HATTA · test F1</span><strong class="fr-kpi-value" id="frKpiF1">—</strong><span class="fr-kpi-note">Held-out synthetic test set</span></article>
+            <article class="fr-kpi glass-card"><span class="fr-kpi-label">Attack detection precision</span><strong class="fr-kpi-value" id="frKpiPrecision">—</strong><span class="fr-kpi-note">Simulated attackers flagged</span></article>
+            <article class="fr-kpi glass-card"><span class="fr-kpi-label">Honest false accusation</span><strong class="fr-kpi-value" id="frKpiFalseAccusation">—</strong><span class="fr-kpi-note">Benign clients flagged</span></article>
+            <article class="fr-kpi glass-card"><span class="fr-kpi-label">Training time</span><strong class="fr-kpi-value" id="frKpiDuration">—</strong><span class="fr-kpi-note" id="frKpiCommunication">Communication: —</span></article>
+          </div>
+
+          <article class="fr-card glass-card">
+            <div class="fr-card-head"><div><h3>Global model comparison</h3><p>Test-set performance across centralized training and federated aggregation methods.</p></div><span class="fr-method-tag"><i class="bi bi-bar-chart-line"></i> Held-out metrics</span></div>
+            <div class="fr-model-list" id="frModelList"><div class="fr-empty">Results will appear here after an experiment.</div></div>
+            <div class="fr-model-legend" id="frModelLegend" aria-label="Metric displayed"><label><input type="radio" name="frMetric" value="f1" checked /> F1 score</label><label><input type="radio" name="frMetric" value="pr_auc" /> PR AUC</label><label><input type="radio" name="frMetric" value="roc_auc" /> ROC AUC</label></div>
+          </article>
+
+          <div class="fr-lower-grid">
+            <article class="fr-card glass-card">
+              <div class="fr-card-head"><div><h3>Client trust by participant</h3><p>Final trust score, simulated role, and detection outcome.</p></div></div>
+              <div class="fr-client-list" id="frClientList"><div class="fr-empty">Client diagnostics will appear here.</div></div>
+            </article>
+            <article class="fr-card glass-card">
+              <div class="fr-card-head"><div><h3>Round progress</h3><p>Mean client trust and HATTA validation PR AUC.</p></div></div>
+              <div class="fr-rounds" id="frRoundList"><div class="fr-empty">Round summaries will appear here.</div></div>
+            </article>
+          </div>
+
+          <article class="fr-card glass-card">
+            <div class="fr-card-head"><div><h3>Security and communication</h3><p>Measured on the generated fixture for this run.</p></div></div>
+            <div class="fr-security-grid" id="frSecurityGrid"><div class="fr-security-stat"><span>Flagged clients</span><strong>—</strong></div><div class="fr-security-stat"><span>Detection recall</span><strong>—</strong></div><div class="fr-security-stat"><span>Bytes transferred</span><strong>—</strong></div></div>
+            <div class="fr-callout" style="margin-top:14px"><i class="bi bi-info-circle-fill" aria-hidden="true"></i><span id="frPrivacyNote">Differential privacy and secure aggregation are disabled. This simulation offers no formal privacy guarantee; its generated labels are not evidence of real meter theft.</span></div>
+          </article>
+
+          <article class="fr-card glass-card">
+            <div class="fr-card-head"><div><h3>Recent runs</h3><p>Runs kept in this API process session. Select one to inspect its results.</p></div><button class="fr-preset" type="button" id="frRefreshHistory"><i class="bi bi-arrow-clockwise"></i> Refresh</button></div>
+            <div class="fr-history" id="frHistory"><div class="fr-empty">No experiment runs in this server session yet.</div></div>
+          </article>
+        </section>
+      </div>
+    </main>
+
+    <script>
+      (() => {
+        const form = document.getElementById("frExperimentForm");
+        const runButton = document.getElementById("frRunButton");
+        const status = document.getElementById("frStatus");
+        const historyBox = document.getElementById("frHistory");
+        let apiBase = (localStorage.getItem("smartgrid_api_base") || window.location.origin).replace(/\/$/, "");
+        let selectedRunId = null;
+        let currentResult = null;
+        const modelNames = { centralized: "Centralized", fedavg: "FedAvg", trimmed_mean: "Trimmed mean", trust: "Trust weighted", hatta: "HATTA" };
+
+        function setStatus(message, kind = "") { status.textContent = message; status.dataset.kind = kind; }
+        function percent(value) { const n = Number(value); return Number.isFinite(n) ? `${(n * 100).toFixed(1)}%` : "—"; }
+        function decimal(value, digits = 3) { const n = Number(value); return Number.isFinite(n) ? n.toFixed(digits) : "—"; }
+        function number(value) { return Number(value || 0).toLocaleString(); }
+        function text(id, value) { const el = document.getElementById(id); if (el) el.textContent = value; }
+        function safeMetric(metrics, name, metric) { return Number(metrics?.[name]?.[metric] ?? 0); }
+        function apiUrl(path) { return `${apiBase}${path}`; }
+        async function requestJson(path, options = {}) {
+          const response = await fetch(apiUrl(path), { credentials: "include", cache: "no-store", ...options });
+          const payload = await response.json().catch(() => ({}));
+          if (!response.ok) {
+            const message = typeof payload.detail === "string" ? payload.detail : `Request failed (${response.status}).`;
+            if (response.status === 401 || response.status === 403) throw new Error("Admin access is required. Sign in with an administrator account and reopen this page.");
+            throw new Error(message);
+          }
+          return payload;
+        }
+        function formatBytes(value) {
+          const n = Number(value || 0);
+          if (n < 1024) return `${number(n)} B`;
+          if (n < 1024 * 1024) return `${(n / 1024).toFixed(1)} KB`;
+          return `${(n / (1024 * 1024)).toFixed(2)} MB`;
+        }
+        function formConfig() {
+          const values = new FormData(form);
+          return { partition: values.get("partition"), attack: values.get("attack"), clients: Number(values.get("clients")), rounds: Number(values.get("rounds")), local_epochs: Number(values.get("local_epochs")), batch_size: Number(values.get("batch_size")), learning_rate: Number(values.get("learning_rate")), malicious_fraction: Number(values.get("malicious_fraction")), attack_intensity: Number(values.get("attack_intensity")), seed: Number(values.get("seed")) };
+        }
+        function metricName() { return document.querySelector('input[name="frMetric"]:checked')?.value || "f1"; }
+
+        function renderModels(result) {
+          const host = document.getElementById("frModelList");
+          const metric = metricName();
+          const names = ["centralized", "fedavg", "trimmed_mean", "trust", "hatta"];
+          host.replaceChildren();
+          names.forEach((name) => {
+            const value = Math.max(0, Math.min(1, safeMetric(result.metrics, name, metric)));
+            const row = document.createElement("div"); row.className = "fr-model-row";
+            const label = document.createElement("span"); label.className = "fr-model-name"; label.textContent = modelNames[name];
+            const track = document.createElement("span"); track.className = "fr-model-track"; track.setAttribute("role", "img"); track.setAttribute("aria-label", `${modelNames[name]} ${metric.toUpperCase()} ${decimal(value)}`);
+            const fill = document.createElement("span"); fill.className = "fr-model-fill"; fill.style.width = `${value * 100}%`; if (name === "hatta") fill.style.background = "linear-gradient(90deg,#14b8a6,#22c55e)"; track.append(fill);
+            const score = document.createElement("span"); score.className = "fr-model-value"; score.textContent = decimal(value);
+            row.append(label, track, score); host.append(row);
+          });
+        }
+        function renderClients(result) {
+          const host = document.getElementById("frClientList"); host.replaceChildren();
+          const malicious = new Set(result.security?.malicious_clients || []);
+          const flagged = new Set(result.security?.flagged_clients || []);
+          const clients = [...(result.clients || [])].sort((a, b) => Number(a.trust) - Number(b.trust));
+          if (!clients.length) { host.innerHTML = '<div class="fr-empty">No client diagnostics returned for this run.</div>'; return; }
+          clients.forEach((client) => {
+            const score = Math.max(0, Math.min(1, Number(client.trust || 0)));
+            const row = document.createElement("div"); row.className = "fr-client";
+            const id = document.createElement("span"); id.className = "fr-client-id"; id.textContent = client.client_id || "Client";
+            const content = document.createElement("div");
+            const meta = document.createElement("div"); meta.className = "fr-client-meta";
+            const role = document.createElement("span"); role.textContent = malicious.has(client.client_id) ? "Simulated attacker" : "Benign participant";
+            const outcome = document.createElement("span"); outcome.textContent = flagged.has(client.client_id) ? "Flagged" : "Included"; if (flagged.has(client.client_id)) outcome.className = "fr-client-flag";
+            meta.append(role, outcome);
+            const track = document.createElement("div"); track.className = "fr-trust-track"; track.setAttribute("aria-label", `Final trust ${percent(score)}`);
+            const fill = document.createElement("span"); fill.className = `fr-trust-fill${score < .4 ? " is-low" : ""}`; fill.style.width = `${score * 100}%`; track.append(fill);
+            content.append(meta, track);
+            const value = document.createElement("span"); value.className = "fr-client-score"; value.textContent = decimal(score, 2);
+            row.append(id, content, value); host.append(row);
+          });
+        }
+        function renderRounds(result) {
+          const host = document.getElementById("frRoundList"); host.replaceChildren();
+          const rounds = result.rounds || [];
+          if (!rounds.length) { host.innerHTML = '<div class="fr-empty">No round summaries returned for this run.</div>'; return; }
+          rounds.forEach((round) => {
+            const pr = Number(round.validation_pr_auc?.hatta || 0);
+            const item = document.createElement("div"); item.className = "fr-round";
+            const title = document.createElement("strong"); title.textContent = `Round ${round.round}`;
+            const meter = document.createElement("span"); meter.className = "fr-round-meter"; meter.setAttribute("aria-label", `Mean trust ${percent(round.mean_trust)}`);
+            const fill = document.createElement("span"); fill.style.width = `${Math.max(0, Math.min(1, Number(round.mean_trust || 0))) * 100}%`; meter.append(fill);
+            const trust = document.createElement("small"); trust.textContent = `Trust ${decimal(round.mean_trust, 2)}`;
+            const score = document.createElement("small"); score.textContent = `PR ${decimal(pr, 2)}`;
+            item.append(title, meter, trust, score); host.append(item);
+          });
+        }
+        function renderResult(result) {
+          currentResult = result; selectedRunId = result.run_id || null;
+          const hatta = result.metrics?.hatta || {};
+          const security = result.security || {};
+          const efficiency = result.efficiency || {};
+          text("frKpiF1", decimal(hatta.f1));
+          text("frKpiPrecision", percent(security.detection_precision));
+          text("frKpiFalseAccusation", percent(security.honest_false_accusation_rate));
+          text("frKpiDuration", `${Number(efficiency.training_seconds || 0).toFixed(2)}s`);
+          text("frKpiCommunication", `Communication: ${formatBytes(efficiency.communication_bytes)}`);
+          text("frRunId", result.run_id ? `Run ${result.run_id}` : "Run complete");
+          text("frRunDescription", `${result.config?.clients || "—"} clients · ${result.config?.partition || "—"} partition · ${result.config?.attack || "—"} scenario · ${result.config?.rounds || "—"} rounds`);
+          text("frPrivacyNote", result.privacy?.reason || "Differential privacy is disabled; this simulation provides no formal privacy guarantee. Results use generated research data.");
+          const flagged = (security.flagged_clients || []).length;
+          const stats = [["Flagged clients", `${flagged} / ${(result.clients || []).length}`], ["Detection recall", percent(security.detection_recall)], ["Bytes transferred", formatBytes(efficiency.communication_bytes)]];
+          const grid = document.getElementById("frSecurityGrid"); grid.replaceChildren();
+          stats.forEach(([label, value]) => { const card = document.createElement("div"); card.className = "fr-security-stat"; const caption = document.createElement("span"); caption.textContent = label; const reading = document.createElement("strong"); reading.textContent = value; card.append(caption, reading); grid.append(card); });
+          renderModels(result); renderClients(result); renderRounds(result); renderHistoryRows();
+        }
+        function renderHistoryRows(runs = null) {
+          const rows = runs || (currentResult ? [{ run_id: currentResult.run_id, config: currentResult.config, metrics: currentResult.metrics }] : []);
+          if (!rows.length) { historyBox.innerHTML = '<div class="fr-empty">No experiment runs in this server session yet.</div>'; return; }
+          historyBox.replaceChildren();
+          [...rows].reverse().slice(0, 8).forEach((run) => {
+            const button = document.createElement("button"); button.type = "button"; button.className = "fr-history-item"; button.dataset.runId = run.run_id || ""; button.setAttribute("aria-current", run.run_id === selectedRunId ? "true" : "false");
+            const main = document.createElement("span"); main.className = "fr-history-main";
+            const title = document.createElement("strong"); title.textContent = `Run ${run.run_id || "pending"}`;
+            const config = run.config || {}; const detail = document.createElement("span"); detail.textContent = `${config.partition || "—"} · ${config.attack || "—"} · ${config.clients || "—"} clients · ${config.rounds || "—"} rounds`;
+            const score = document.createElement("span"); score.className = "fr-history-score"; score.textContent = `F1 ${decimal(run.metrics?.hatta?.f1)}`;
+            main.append(title, detail); button.append(main, score); historyBox.append(button);
+          });
+        }
+        async function refreshHistory() {
+          const payload = await requestJson("/api/research/experiments");
+          const runs = payload.runs || [];
+          if (runs.length || !currentResult) renderHistoryRows(runs);
+        }
+        async function loadRun(runId) {
+          setStatus(`Loading run ${runId}…`);
+          try { const result = await requestJson(`/api/research/experiments/${encodeURIComponent(runId)}`); renderResult(result); setStatus(`Loaded run ${runId}.`, "success"); }
+          catch (error) { setStatus(error.message, "error"); }
+        }
+        async function runExperiment(event) {
+          event.preventDefault(); if (!form.reportValidity()) return;
+          runButton.disabled = true; runButton.querySelector("i").className = "bi bi-arrow-repeat fr-spin"; runButton.querySelector("span").textContent = "Running simulation…";
+          setStatus("Training client models and evaluating the held-out fixture. This may take a few seconds.");
+          try {
+            const result = await requestJson("/api/research/experiments", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(formConfig()) });
+            renderResult(result); await refreshHistory(); setStatus(`Run ${result.run_id} completed. Results were saved to a local research artifact.`, "success");
+          } catch (error) { setStatus(error.message, "error"); }
+          finally { runButton.disabled = false; runButton.querySelector("i").className = "bi bi-play-fill"; runButton.querySelector("span").textContent = "Run experiment"; }
+        }
+        function applyPreset(name) {
+          const values = {
+            baseline: { partition: "iid", attack: "none", malicious_fraction: "0", attack_intensity: "4", clients: "8", rounds: "5", local_epochs: "2" },
+            "non-iid": { partition: "severe", attack: "none", malicious_fraction: "0", attack_intensity: "4", clients: "8", rounds: "5", local_epochs: "2" },
+            poisoning: { partition: "severe", attack: "sign", malicious_fraction: "0.25", attack_intensity: "4", clients: "8", rounds: "5", local_epochs: "2" },
+          }[name];
+          if (!values) return;
+          Object.entries(values).forEach(([key, value]) => { const field = form.elements.namedItem(key); if (field) field.value = value; });
+          setStatus(`${name === "non-iid" ? "Severe non-IID" : name === "poisoning" ? "Sign attack" : "Benign baseline"} preset selected.`);
+        }
+        form.addEventListener("submit", runExperiment);
+        document.querySelectorAll(".fr-preset[data-preset]").forEach((button) => button.addEventListener("click", () => applyPreset(button.dataset.preset)));
+        document.querySelectorAll('input[name="frMetric"]').forEach((radio) => radio.addEventListener("change", () => { if (currentResult) renderModels(currentResult); }));
+        historyBox.addEventListener("click", (event) => { const button = event.target.closest("[data-run-id]"); if (button?.dataset.runId) loadRun(button.dataset.runId); });
+        document.getElementById("frRefreshHistory").addEventListener("click", () => refreshHistory().then(() => setStatus("Run history refreshed.", "success")).catch((error) => setStatus(error.message, "error")));
+        window.addEventListener("message", (event) => {
+          const message = event.data || {};
+          if (message.type === "dashboard-config") { if (message.apiBase) apiBase = String(message.apiBase).replace(/\/$/, ""); if (message.theme) { document.documentElement.dataset.theme = message.theme; document.body.dataset.theme = message.theme; } }
+          if (message.type === "dashboard-activated") refreshHistory().catch((error) => setStatus(error.message, "error"));
+        });
+        document.querySelectorAll('input[name="frMetric"]').forEach((radio) => { if (radio.checked) radio.setAttribute("checked", ""); });
+        refreshHistory().catch(() => setStatus("Sign in as an administrator to use the research workspace.", "error"));
+      })();
+    </script>
+  </body>
+</html>
